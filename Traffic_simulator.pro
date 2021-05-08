@@ -9,14 +9,21 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    car.cpp \
+    crossroad.cpp \
+    graphicsview.cpp \
     main.cpp \
-    mainwindow.cpp
+    milestone.cpp \
+    router.cpp
 
 HEADERS += \
-    mainwindow.h
+    car.h \
+    crossroad.h \
+    graphicsview.h \
+    milestone.h \
+    router.h
 
-FORMS += \
-    mainwindow.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
