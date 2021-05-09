@@ -15,8 +15,7 @@ public:
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget) override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget) override;
 
     void faceToMilestone();
     void setMilestone(Milestone *nextMS);

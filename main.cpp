@@ -1,12 +1,16 @@
-#include "graphicsview.h"
+
 #include "car.h"
 #include "milestone.h"
 #include "crossroad.h"
+#include "road.h"
+#include "router.h"
 
+#include <QtMath>
+#include <QtWidgets>
 #include <QApplication>
-#include <cmath>
+#include <QDebug>
+//#include <cmath>
 
-//static constexpr int MouseCount = 7;
 
 
 int main(int argc, char **argv)
@@ -17,6 +21,24 @@ int main(int argc, char **argv)
     scene.setSceneRect(0, 0, 800, 800);
 
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);  //
+
+
+
+
+    // tab parameters {x, y, angle, atrbA, atrB}
+    /*int tabRoads[][]={
+        {100,500,90,0,0},
+        {100,100},
+        {600,100},
+        {1,1},
+        {1,1},
+        {1,1},
+        {1,1}
+
+
+
+    }*/
+
 
 
     int tabMilestones[][2]={
@@ -46,9 +68,28 @@ int main(int argc, char **argv)
     car->setSpeed(200);
     scene.addItem(car);*/
 
+    Road tab[5];
+    Router router;
+
+    for(int i=0; i<5; i++){
+        tab[i].setPos(200+100*i,200);
+        scene.addItem(&tab[i]);
+        if(i) router.connect(&tab[i-1], &tab[i]);
+    }
 
 
-    Milestone ms1;
+    Road r2;
+    r2.setPos(500,600);
+    r2.setRotation(90);
+    scene.addItem(&r2);
+
+
+
+    router.connect(&tab[4], &r2);
+    router.connect(&r2, &tab[0]);
+
+
+   /* Milestone ms1;
     ms1.setPos(100,500);
     scene.addItem(&ms1);
 
@@ -64,45 +105,58 @@ int main(int argc, char **argv)
 
     ms1.nextMilestone = &ms2;
     ms2.nextMilestone = &ms3;
-    ms3.nextMilestone = cross1.getEntrance_N();
+    ms3.nextMilestone = r1.mB;
+    r2.mB->nextMilestone = &ms1;*/
+
+    //r1.mB->nextMilestone = r2.mB;
+
+
+
+    //ms3.nextMilestone = cross1.getEntrance_N();
     //cross1.entrance_W = &ms1;
 
-    ms2.prevMilestone = &ms1;
-    ms3.prevMilestone = &ms2;
+
+    //qDebug() << ms1.nextMilestone->scenePos().x();
 
 
 
-    Car car(&ms1);
+    //ms2.prevMilestone = &ms1;
+    //ms3.prevMilestone = &ms2;
+
+
+
+
+    Car car(tab[0].mB);
     car.setPos(100,500);
-    car.setSpeed(800);
+    car.setSpeed(400);
     scene.addItem(&car);
 
-    Car car2(&ms1);
+    /*Car car2(r2.mB);
     car2.setPos(100,550);
-    car2.setSpeed(750);
+    car2.setSpeed(50);
     scene.addItem(&car2);
 
-    Car car3(&ms1);
+    Car car3(&r2.mB);
     car3.setPos(100,600);
-    car3.setSpeed(700);
+    car3.setSpeed(50);
     scene.addItem(&car3);
 
-    Car car4(&ms1);
+    Car car4(&r2.mB);
     car4.setPos(150,650);
-    car4.setSpeed(650);
+    car4.setSpeed(50);
     scene.addItem(&car4);
 
-    Car car5(&ms1);
+    Car car5(&r2.mB);
     car5.setPos(200,700);
-    car5.setSpeed(500);
-    scene.addItem(&car5);
+    car5.setSpeed(50);
+    scene.addItem(&car5);*/
 
     //car.setMilestone(&ms1);
     car.faceToMilestone();
-    car2.faceToMilestone();
+    /*car2.faceToMilestone();
     car3.faceToMilestone();
     car4.faceToMilestone();
-    car5.faceToMilestone();
+    car5.faceToMilestone();*/
 
     /*Milestone ms11;
     ms11.setPos(300,200);
@@ -192,15 +246,23 @@ int main(int argc, char **argv)
     car2->faceToMilestone();
 */
 
-    GraphicsView view(&scene);
+    QGraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);
+    //view.setBackgroundBrush(QPixmap(":/images/background.jpg"));
 
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    view.setDragMode(QGraphicsView::ScrollHandDrag);
 
-    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic"));
-    view.showMaximized();
-    //view.showMinimized();
+    view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic Simulator"));
+    //view.resize(900, 900);
+    //view.show();
+    //view.showMaximized();
+    view.showMinimized();
+
+    //QTimer timer;
+    //QObject::connect(&timer, &QTimer::timeout, &scene, &QGraphicsScene::advance);
+    //timer.start(1000 / 33);
 
 
     return app.exec();

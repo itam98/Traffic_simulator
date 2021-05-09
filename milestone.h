@@ -5,6 +5,8 @@
 
 class Milestone : public QGraphicsObject
 {
+
+
 public:
     Milestone();
 

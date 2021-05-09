@@ -11,16 +11,16 @@ CONFIG += c++11
 SOURCES += \
     car.cpp \
     crossroad.cpp \
-    graphicsview.cpp \
     main.cpp \
     milestone.cpp \
+    road.cpp \
     router.cpp
 
 HEADERS += \
     car.h \
     crossroad.h \
-    graphicsview.h \
     milestone.h \
+    road.h \
     router.h
 
 FORMS +=
