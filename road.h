@@ -5,7 +5,7 @@
 #include "milestone.h"
 #include <QDebug>
 
-enum Side { front, back };
+enum Side { front, back, North, East, South, West}; //used also in crossroad class
 
 class Road : public QGraphicsObject
 {

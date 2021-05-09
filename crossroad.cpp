@@ -9,34 +9,44 @@
 #include <QDebug>
 
 
-Crossroad::Crossroad(QGraphicsScene* scene, int x, int y, Milestone* eN, Milestone* eE, Milestone* eS, Milestone* eW)
+Crossroad::Crossroad()
 {
 
     //   N
     // W + E
     //   S
 
-    setPos(x,y);
+    //setPos(x,y);
 
-    entrance_N.setPos(x-width/4,y-width/2);
-    entrance_E.setPos(x+width/2,y-width/4);
-    entrance_S.setPos(x+width/4,y+width/2);
-    entrance_W.setPos(x-width/2,y+width/4);
+    entrance_N = new Road;
+    entrance_E = new Road;
+    entrance_S = new Road;
+    entrance_W = new Road;
 
-    entrance_N.nextMilestone=&entrance_W;
-    entrance_W.nextMilestone=eW;
+    entrance_N->setParentItem(this);
+    entrance_E->setParentItem(this);
+    entrance_S->setParentItem(this);
+    entrance_W->setParentItem(this);
 
-    scene->addItem(this);
-    scene->addItem(&entrance_N);
-    scene->addItem(&entrance_E);
-    scene->addItem(&entrance_S);
-    scene->addItem(&entrance_W);
+    entrance_N->setPos(0, -width/2);
+    entrance_N->setRotation(-90);
+    entrance_E->setPos(width/2, 0);
+    entrance_S->setPos(0, width/2);
+    entrance_S->setRotation(90);
+    entrance_W->setPos(-width/2, 0);
+    entrance_W->setRotation(180);
+
+
 
 }
 
-Milestone* Crossroad::getEntrance_N()
+Road* Crossroad::getEntrance(Side side)
 {
-    return &entrance_N;
+    if(side==Side::North) return entrance_N;
+    else if(side==Side::East) return entrance_E;
+    else if(side==Side::South) return entrance_S;
+    else if(side==Side::West) return entrance_W;
+    else return 0;
 }
 
 

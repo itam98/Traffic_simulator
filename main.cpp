@@ -16,24 +16,21 @@
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-
     QGraphicsScene scene;
     scene.setSceneRect(0, 0, 800, 800);
-
-    scene.setItemIndexMethod(QGraphicsScene::NoIndex);  //
-
+    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
 
 
-    // tab parameters {x, y, angle}
+    // tab parameters {x, y, angle} TODO: odczyt z pliku
     int tabRoads[12][3]={
         {300,100,0},
         {400,100,45},
         {500,200,45},
         {500,300,90},
         {500,400,135},
-        {400,500,135},
-        {300,500,180},
+        {400,600,135},
+        {300,600,180},
         {200,500,-135},
         {100,400,-135},
         {100,300,-90},
@@ -77,6 +74,10 @@ int main(int argc, char **argv)
     }
      router.connect(&tab[11], &tab[0]);
 
+
+    Crossroad cross1;
+    cross1.setPos(300,300);
+    scene.addItem(&cross1);
 
 
     Car car(tab[0].mB);
@@ -135,5 +136,5 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
-//! [6]
+
 
