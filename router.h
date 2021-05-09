@@ -14,7 +14,7 @@ public:
     Router();
 
 
-    void connect(Road *road1, Road *road2);
+    void connect(Road *road1, Road *road2, bool inv1=false, bool inv2=false);
 
 };
 

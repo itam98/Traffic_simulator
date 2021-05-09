@@ -9,9 +9,9 @@
 
 Road::Road()
 {
-    //A
+    //L A   TODO: zmienić A i B na L i P
     //x
-    //B
+    //P B
 
     //Milestone *mA = new Milestone;
     //Milestone *mB = new Milestone;

@@ -36,7 +36,11 @@ Crossroad::Crossroad()
     entrance_W->setPos(-width/2, 0);
     entrance_W->setRotation(180);
 
+    entrance_N->mA->nextMilestone = entrance_W->mB;
+    entrance_W->mB->prevMilestone = entrance_N->mA;
 
+    entrance_W->mA->nextMilestone = entrance_N->mB;
+    entrance_N->mB->prevMilestone = entrance_W->mA;
 
 }
 
