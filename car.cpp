@@ -1,5 +1,4 @@
 #include "car.h"
-
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QRandomGenerator>
@@ -15,6 +14,10 @@ Car::Car(Milestone *nextMS) : color(QRandomGenerator::global()->bounded(256),
     startTimer(1000/framerate);
     nextMilestone=nextMS;
     faceToMilestone();
+    defaultSpeed = 50+ QRandomGenerator::global()->bounded(400);
+
+    sensor1 = new Sensor;
+    sensor1->setParentItem(this);
 }
 
 
@@ -34,21 +37,65 @@ void Car::timerEvent(QTimerEvent *)
         faceToMilestone();
     }
 
+
+    QList<QGraphicsItem*> collidingItems = scene()->collidingItems(this,Qt::IntersectsItemShape);
+
+    setSpeed(defaultSpeed);
+    foreach (QGraphicsItem * item, collidingItems){
+        Car * carItem = dynamic_cast<Car*>(item);
+        if(carItem){
+            setSpeed(carItem->getSpeed());
+        }
+
+
+    }
+
+
+/*    const QList<QGraphicsItem *> dangerMice = scene()->items(QPolygonF()
+                           << mapToScene(0, 0)
+                           << mapToScene(-30, -50)
+                           << mapToScene(30, -50));
+    setSpeed(150);
+
+    for (const QGraphicsItem *item : dangerMice)
+    {
+        if (item == this)
+            continue;
+        if( item->metaObject()->className() )setSpeed(30);
+    }
+*/
+    /*if(!scene()->collidingItems(this).isEmpty() ){
+        for (int i = 0; i < scene()->collidingItems(this).size(); ++i) {
+            if (scene()->collidingItems(this).at(i))
+                cout << "Found Jane at position " << i << Qt::endl;
+        }
+
+        //qDebug() << "collison";
+        setSpeed(100);
+    }
+    else setSpeed(30);
+*/
+       // qobject_cast<Car*>(instance);
+
 }
 
 QRectF Car::boundingRect() const    //metoda dziedziczona po wirtualnej metodzie w graphicsobject a dokładniej grpahicsItem
 {
     qreal adjust = 2;
-    return QRectF(-10 - adjust, -25 - adjust,
-                  20 + adjust, 45 + adjust);
+    //return QRectF(-10 - adjust, -25 - adjust,20 + adjust, 45 + adjust);
+    return QRectF(-20 - adjust, -80 - adjust,40 + adjust, 100 + adjust);
+
 }
 
 
 QPainterPath Car::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
-    path.addRect(-10, -25, 20, 45);
+    //path.addRect(-10, -25, 20, 45);
+    path.addRect(-10, -35, 20, 65);
+    //path.addRect(-10, -35, 20, 10);
     return path;
+
 }
 
 void Car::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -70,11 +117,14 @@ void Car::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 
 void Car::faceToMilestone()     //skieruj samochód w kierunku następnego celu
 {
-    //std::complex<double> temp(  nextMilestone->x()-x()  ,  -(nextMilestone->y()-y())  ); //tworzy liczbę zepoloną
-    std::complex<double> temp(  nextMilestone->scenePos().x()-x()  ,  -(nextMilestone->scenePos().y()-y())  ); //tworzy liczbę zepoloną
-    qreal angle = qRadiansToDegrees(  std::arg(temp)  );    //zwraca kat powyższej liczby
-    //qInfo() << "Milestone x: " << nextMilestone->x() << " y: " << nextMilestone->y() << "Car x: "<< x() << " y: " << y() << "angle: "<< angle;
-    setTransform(QTransform().rotate(90-angle), false);
+    if(nextMilestone != NULL){
+        //std::complex<double> temp(  nextMilestone->x()-x()  ,  -(nextMilestone->y()-y())  ); //tworzy liczbę zepoloną
+        std::complex<double> temp(  nextMilestone->scenePos().x()-x()  ,  -(nextMilestone->scenePos().y()-y())  ); //tworzy liczbę zepoloną
+        qreal angle = qRadiansToDegrees(  std::arg(temp)  );    //zwraca kat powyższej liczby
+        //qInfo() << "Milestone x: " << nextMilestone->x() << " y: " << nextMilestone->y() << "Car x: "<< x() << " y: " << y() << "angle: "<< angle;
+        setTransform(QTransform().rotate(90-angle), false);
+    }
+    else qDebug() << "NULL pointer: faceToMilestone";
 }
 
 void Car::setMilestone(Milestone *nextMS)
@@ -90,6 +140,8 @@ void Car::setSpeed(qreal value)
 }
 
 
-
+qreal Car::getSpeed(){
+    return speed;
+}
 
 

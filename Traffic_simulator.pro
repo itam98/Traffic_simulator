@@ -14,14 +14,16 @@ SOURCES += \
     main.cpp \
     milestone.cpp \
     road.cpp \
-    router.cpp
+    router.cpp \
+    sensor.cpp
 
 HEADERS += \
     car.h \
     crossroad.h \
     milestone.h \
     road.h \
-    router.h
+    router.h \
+    sensor.h
 
 FORMS +=
 

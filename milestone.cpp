@@ -20,12 +20,12 @@ QRectF Milestone::boundingRect() const
 }
 
 
-QPainterPath Milestone::shape() const
+/*QPainterPath Milestone::shape() const
 {
     QPainterPath path;
     path.addRect(-5, -5, 10, 10);
     return path;
-}
+}*/
 
 void Milestone::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {

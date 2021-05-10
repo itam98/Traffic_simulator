@@ -35,12 +35,12 @@ QRectF Road::boundingRect() const
 }
 
 
-QPainterPath Road::shape() const
+/*QPainterPath Road::shape() const
 {
     QPainterPath path;
     path.addRect(-2, -30, 11, 60);
     return path;
-}
+}*/
 
 void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {

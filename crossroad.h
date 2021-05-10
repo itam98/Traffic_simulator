@@ -20,10 +20,10 @@ public:
 
 
 
-    Road *entrance_N;   //   N
-    Road *entrance_E;   // W + E
-    Road *entrance_S;   //   S
-    Road *entrance_W;
+    Road *rNorth;  //   N
+    Road *rEast;   // W + E
+    Road *rSouth;  //   S
+    Road *rWest;
 
     Road* getEntrance(Side side);
 

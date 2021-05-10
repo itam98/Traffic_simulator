@@ -15,7 +15,7 @@ public:
     Road();
 
     QRectF boundingRect() const override;
-    QPainterPath shape() const override;
+    //QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget) override;
 
     Milestone *mA;

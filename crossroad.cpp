@@ -16,40 +16,41 @@ Crossroad::Crossroad()
     // W + E
     //   S
 
-    //setPos(x,y);
 
-    entrance_N = new Road;
-    entrance_E = new Road;
-    entrance_S = new Road;
-    entrance_W = new Road;
+    rNorth = new Road;
+    rEast = new Road;
+    rSouth = new Road;
+    rWest = new Road;
 
-    entrance_N->setParentItem(this);
-    entrance_E->setParentItem(this);
-    entrance_S->setParentItem(this);
-    entrance_W->setParentItem(this);
+    rNorth->setParentItem(this);
+    rEast->setParentItem(this);
+    rSouth->setParentItem(this);
+    rWest->setParentItem(this);
 
-    entrance_N->setPos(0, -width/2);
-    entrance_N->setRotation(-90);
-    entrance_E->setPos(width/2, 0);
-    entrance_S->setPos(0, width/2);
-    entrance_S->setRotation(90);
-    entrance_W->setPos(-width/2, 0);
-    entrance_W->setRotation(180);
+    rNorth->setPos(0, -width/2);
+    rNorth->setRotation(-90);
+    rEast->setPos(width/2, 0);
+    rSouth->setPos(0, width/2);
+    rSouth->setRotation(90);
+    rWest->setPos(-width/2, 0);
+    rWest->setRotation(180);
 
-    entrance_N->mA->nextMilestone = entrance_W->mB;
-    entrance_W->mB->prevMilestone = entrance_N->mA;
 
-    entrance_W->mA->nextMilestone = entrance_N->mB;
-    entrance_N->mB->prevMilestone = entrance_W->mA;
+    //
+    rNorth->mA->nextMilestone = rWest->mB;
+    rWest->mB->prevMilestone = rNorth->mA;
+
+    rWest->mA->nextMilestone = rNorth->mB;
+    rNorth->mB->prevMilestone = rWest->mA;
 
 }
 
 Road* Crossroad::getEntrance(Side side)
 {
-    if(side==Side::North) return entrance_N;
-    else if(side==Side::East) return entrance_E;
-    else if(side==Side::South) return entrance_S;
-    else if(side==Side::West) return entrance_W;
+    if(side==Side::North) return rNorth;
+    else if(side==Side::East) return rEast;
+    else if(side==Side::South) return rSouth;
+    else if(side==Side::West) return rWest;
     else return 0;
 }
 
