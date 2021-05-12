@@ -73,17 +73,12 @@ int main(int argc, char **argv)
     Road tab[15];
     Router router;
 
-    /*for(int i=0; i<5; i++){
-        tab[i].setPos(200+100*i,200);
-        scene.addItem(&tab[i]);
-        if(i) router.connect(&tab[i-1], &tab[i]);
-    }*/
 
     for(int i=0; i<14; i++){
         tab[i].setPos(tabRoads[i][0],tabRoads[i][1]);
         tab[i].setRotation(tabRoads[i][2]);
         scene.addItem(&tab[i]);
-        //if(i) router.connect(&tab[i-1], &tab[i]);
+
     }
 
     for(int i=0; i<10; i++){

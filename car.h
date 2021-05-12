@@ -18,7 +18,7 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget) override;
 
-    void faceToMilestone();
+    bool faceToMilestone();
     void setMilestone(Milestone *nextMS);
 
     void setSpeed(qreal value);

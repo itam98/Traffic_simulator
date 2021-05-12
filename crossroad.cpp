@@ -16,6 +16,28 @@ Crossroad::Crossroad()
     // W + E
     //   S
 
+    int coord[4][3]={           //x,y, rotation
+        {0, -width/2 , -90},
+        {width/2, 0  , 0},
+        {0, width/2  , 90},
+        {-width/2, 0 , 180}
+    };
+
+    for(int i=0; i<4; i++){     //create crossroad entrances
+        road[i] = new Road;
+        road[i]->setParentItem(this);
+        road[i]->setPos(coord[i][0], coord[i][1]);
+        road[i]->setRotation(coord[i][2]);
+        road[i]->mA->isCrossroad = true;
+    }
+
+    for(int i=0; i<4; i++){
+        int next_i = i + 1;
+        if(next_i == 4) next_i = 0;
+
+        //road[i]->mA->nextMilestone
+
+    }
 
     rNorth = new Road;
     rEast = new Road;
@@ -51,8 +73,31 @@ Road* Crossroad::getEntrance(Side side)
     else if(side==Side::East) return rEast;
     else if(side==Side::South) return rSouth;
     else if(side==Side::West) return rWest;
-    else return 0;
+    else return NULL;
 }
+
+Milestone* Crossroad::getNextMilestone(Milestone* currentMilestone, Direction dir)
+{
+    int temp;
+    for(int i=0; i<4; i++){
+        if(currentMilestone == road[i]->mA)
+        {
+            if(dir == Direction::left) temp = i-1;
+            if(dir == Direction::right) temp = i+1;
+            if(dir == Direction::straight) temp = i+2;
+            continue;
+        }
+    }
+
+    if(temp<0) temp= temp+4;
+    if(temp>3) temp=temp-4;
+    return road[temp]->mB;
+}
+
+
+
+
+
 
 
 QRectF Crossroad::boundingRect() const    //metoda dziedziczona po wirtualnej metodzie w graphicsobject a dokładniej grpahicsItem
@@ -78,3 +123,5 @@ void Crossroad::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 
 
 }
+
+

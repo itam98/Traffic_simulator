@@ -5,7 +5,7 @@
 #include "milestone.h"
 #include <QDebug>
 
-enum Side { front, back, North, East, South, West}; //used also in crossroad class
+enum Side { North=0, East=1, South=2, West=3, front, back}; //used also in crossroad class
 
 class Road : public QGraphicsObject
 {
@@ -23,12 +23,14 @@ public:
 
     void connect(Road *road2, int side);
 
+    bool isCrossroad=false;
+
 protected:
     const int w=80; //width of the road
 
 private:
 
-        qreal speedLimit;    //przechowuje informacje o limicie prędkości
+    qreal speedLimit;    //przechowuje informacje o limicie prędkości
 
 };
 

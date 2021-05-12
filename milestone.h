@@ -2,6 +2,8 @@
 #define MILESTONE_H
 
 #include <QGraphicsObject>
+//#include "road.h"
+//#include "crossroad.h"
 
 class Milestone : public QGraphicsObject
 {
@@ -21,6 +23,11 @@ public:
 
     Milestone *nextMilestone;    //wskaznik do nastepny punkt
     Milestone *prevMilestone;    //wskaznik do poprzedniego punkt
+
+    //Road * itemsRoad;
+    //Crossroad *itemsCrossroad;
+
+    bool isCrossroad=false;
 
     private:
 

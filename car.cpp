@@ -24,17 +24,24 @@ Car::Car(Milestone *nextMS) : color(QRandomGenerator::global()->bounded(256),
 
 void Car::timerEvent(QTimerEvent *)
 {
+    if(nextMilestone != NULL){
+        //sprawdza odległóść do obiektu
+        QLineF lineToMilestone(scenePos(), nextMilestone->scenePos());
+        if (lineToMilestone.length() > aproxDistanceToMS)           //sprawdź czy punkt został osiagnięty
+        {
+            setPos(mapToParent(0, -step_length));                   //jeśli nie to zrób krok
+        }
+        else                                                        //jeśli tak to pobierz nastpny punkt
+        {
+            if(nextMilestone->isCrossroad == false){
+                nextMilestone = nextMilestone->nextMilestone;
+                faceToMilestone();
+            }
+            else{
 
-    //QLineF lineToMilestone(QPointF(0, 0), mapFromScene( nextMilestone->x(), nextMilestone->y()));    //sprawdza odległóść do obiektu
-    QLineF lineToMilestone(scenePos(), nextMilestone->scenePos());
-    if (lineToMilestone.length() > aproxDistanceToMS)           //sprawdź czy punkt został osiagnięty
-    {
-        setPos(mapToParent(0, -step_length));                   //jeśli nie to zrób krok
-    }
-    else                                                        //jeśli tak to pobierz nastpny punkt
-    {
-        nextMilestone = nextMilestone->nextMilestone;
-        faceToMilestone();
+            }
+        }
+
     }
 
 
@@ -115,16 +122,21 @@ void Car::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 
 }
 
-void Car::faceToMilestone()     //skieruj samochód w kierunku następnego celu
+bool Car::faceToMilestone()     //skieruj samochód w kierunku następnego celu
 {
     if(nextMilestone != NULL){
+        qDebug() << "NOT NULL pointer: faceToMilestone";
         //std::complex<double> temp(  nextMilestone->x()-x()  ,  -(nextMilestone->y()-y())  ); //tworzy liczbę zepoloną
         std::complex<double> temp(  nextMilestone->scenePos().x()-x()  ,  -(nextMilestone->scenePos().y()-y())  ); //tworzy liczbę zepoloną
         qreal angle = qRadiansToDegrees(  std::arg(temp)  );    //zwraca kat powyższej liczby
         //qInfo() << "Milestone x: " << nextMilestone->x() << " y: " << nextMilestone->y() << "Car x: "<< x() << " y: " << y() << "angle: "<< angle;
         setTransform(QTransform().rotate(90-angle), false);
+        return true;
     }
-    else qDebug() << "NULL pointer: faceToMilestone";
+    else {
+        qDebug() << "NULL pointer: faceToMilestone";
+        return false;
+    }
 }
 
 void Car::setMilestone(Milestone *nextMS)
