@@ -5,7 +5,12 @@
 #include "milestone.h"
 #include "road.h"
 
-enum Direction { left=1, straight=2, right=3};    //direction on crossroad
+enum Direction { left, straight, right};    //direction on crossroad
+enum Entrance {North, East, South, West};
+
+
+class Milestone;
+class Road;
 
 class Crossroad : public QGraphicsObject
 {
@@ -21,15 +26,10 @@ public:
 
     Milestone* getNextMilestone(Milestone* currentMilestone, Direction dir);
 
-    Road *rNorth;  //   N
-    Road *rEast;   // W + E
-    Road *rSouth;  //   S
-    Road *rWest;
+    Road *getEntrance(Entrance entrance);
+
 
     Road *road[4];
-
-    Road* getEntrance(Side side);
-
 
 
 protected:

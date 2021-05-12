@@ -35,7 +35,7 @@ private:
     qreal speed = 0;
     qreal step_length = 0;
     QColor color;
-    Milestone *nextMilestone;
+    Milestone *currentMilestone;
     int aproxDistanceToMS;
 };
 

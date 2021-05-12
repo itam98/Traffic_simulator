@@ -5,7 +5,9 @@
 #include "milestone.h"
 #include <QDebug>
 
-enum Side { North=0, East=1, South=2, West=3, front, back}; //used also in crossroad class
+enum Side {front, back}; //used also in crossroad class
+
+class Milestone;
 
 class Road : public QGraphicsObject
 {
@@ -13,13 +15,17 @@ class Road : public QGraphicsObject
 
 public:
     Road();
+    ~Road();
+
+    int objNo;
+    static int objCnt;
 
     QRectF boundingRect() const override;
     //QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget) override;
 
-    Milestone *mA;
-    Milestone *mB;
+    Milestone *mL;
+    Milestone *mP;
 
     void connect(Road *road2, int side);
 
@@ -30,7 +36,7 @@ protected:
 
 private:
 
-    qreal speedLimit;    //przechowuje informacje o limicie prędkości
+    qreal speedLimit;    //przechowuje informLcje o limicie prędkości
 
 };
 

@@ -9,7 +9,7 @@
 #include <QtWidgets>
 #include <QApplication>
 #include <QDebug>
-//#include <cmath>
+//#include <cmLth>
 
 
 
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
     // tab parameters {x, y, angle} TODO: odczyt z pliku
     int tabRoads[14][3]={
-        {300,80,0},
+        {300,80,0},     //0
         {400,100,45},
         {500,200,45},
         {500,300,90},
@@ -35,7 +35,8 @@ int main(int argc, char **argv)
         {100,400,-135},
         {80,300,-90},
         {100,200,-45},
-        {200,100,-45},
+        {200,100,-45},  //10
+        //te po prawo na dole
         {700,400,45},
         {700,600,135},
         {500,600,-135}
@@ -65,7 +66,8 @@ int main(int argc, char **argv)
         {8, 9},
         {9, 10},
         {10, 0},
-        {11, 0}
+        {11, 12},
+        {12,13},
     };
 
 
@@ -81,13 +83,17 @@ int main(int argc, char **argv)
 
     }
 
-    for(int i=0; i<10; i++){
+    int t_size = sizeof tabConn / sizeof tabConn[0];
+
+    for(int i=0; i<t_size; i++){
         router.connect(&tab[tabConn[i][0]], &tab[tabConn[i][1]]);
     }
 
-    router.connect(&tab[3], cross1.rNorth,false, true);
-    router.connect(cross1.rWest, &tab[4]);
+    router.connect(&tab[3], cross1.road[Entrance::North],false, true);
+    router.connect(cross1.road[Entrance::West], &tab[4]);
 
+    router.connect(cross1.road[Entrance::East], &tab[11]);
+    router.connect(&tab[13], cross1.road[Entrance::South], false, true);
 
      //router.connect(&tab[11], &tab[0]);
 
@@ -95,27 +101,27 @@ int main(int argc, char **argv)
 
 
 
-    Car car(tab[0].mB);
-    car.setPos(100,200);
+    Car car(tab[0].mP);
+    car.setPos(tab[0].mP->pos());
     car.setSpeed(100);
     scene.addItem(&car);
 
-    Car car2(tab[8].mB);
-    car2.setPos(100,40);
+    Car car2(tab[8].mP);
+    car2.setPos(tab[8].mP->pos());
     car2.setSpeed(400);
     scene.addItem(&car2);
 /*
-    Car car3(tab[8].mB);
+    Car car3(tab[8].mP);
     car3.setPos(100,600);
     car3.setSpeed(100);
     scene.addItem(&car3);
 
-    Car car4(tab[8].mA);
+    Car car4(tab[8].mL);
     car4.setPos(400,650);
     car4.setSpeed(100);
     scene.addItem(&car4);
 */
-    /*Car car5(tab[8].mA);
+    /*Car car5(tab[8].mL);
     car5.setPos(200,700);
     car5.setSpeed(400);
     scene.addItem(&car5);*/
@@ -133,7 +139,7 @@ int main(int argc, char **argv)
     QGraphicsView view(&scene);
     //view.scale(0.5 , 0.5);
     view.setRenderHint(QPainter::Antialiasing);
-    //view.setBackgroundBrush(QPixmap(":/images/background.jpg"));
+    //view.setBackgroundBrush(QPixmLp(":/imLges/background.jpg"));
 
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
@@ -142,7 +148,7 @@ int main(int argc, char **argv)
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic Simulator"));
     //view.resize(900, 900);
     //view.show();
-    //view.showMaximized();
+    //view.showmLximized();
     view.showMinimized();
 
     //QTimer timer;

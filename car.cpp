@@ -1,4 +1,5 @@
 #include "car.h"
+#include "crossroad.h"
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QRandomGenerator>
@@ -12,7 +13,7 @@ Car::Car(Milestone *nextMS) : color(QRandomGenerator::global()->bounded(256),
                    QRandomGenerator::global()->bounded(256))
 {
     startTimer(1000/framerate);
-    nextMilestone=nextMS;
+    currentMilestone=nextMS;
     faceToMilestone();
     defaultSpeed = 50+ QRandomGenerator::global()->bounded(400);
 
@@ -24,20 +25,26 @@ Car::Car(Milestone *nextMS) : color(QRandomGenerator::global()->bounded(256),
 
 void Car::timerEvent(QTimerEvent *)
 {
-    if(nextMilestone != NULL){
+    if(currentMilestone != NULL){
         //sprawdza odległóść do obiektu
-        QLineF lineToMilestone(scenePos(), nextMilestone->scenePos());
+        QLineF lineToMilestone(scenePos(), currentMilestone->scenePos());
         if (lineToMilestone.length() > aproxDistanceToMS)           //sprawdź czy punkt został osiagnięty
         {
             setPos(mapToParent(0, -step_length));                   //jeśli nie to zrób krok
         }
         else                                                        //jeśli tak to pobierz nastpny punkt
         {
-            if(nextMilestone->isCrossroad == false){
-                nextMilestone = nextMilestone->nextMilestone;
+            if(currentMilestone->isCrossroad == false){
+                currentMilestone = currentMilestone->next;
                 faceToMilestone();
             }
-            else{
+            else{   //the car reached crossroad
+                Crossroad *cross = currentMilestone->itemsCrossroad;
+
+                int random = QRandomGenerator::global()->bounded(3);
+                currentMilestone = cross->getNextMilestone(currentMilestone, (Direction)random);
+                faceToMilestone();
+
 
             }
         }
@@ -59,9 +66,9 @@ void Car::timerEvent(QTimerEvent *)
 
 
 /*    const QList<QGraphicsItem *> dangerMice = scene()->items(QPolygonF()
-                           << mapToScene(0, 0)
-                           << mapToScene(-30, -50)
-                           << mapToScene(30, -50));
+                           << mLpToScene(0, 0)
+                           << mLpToScene(-30, -50)
+                           << mLpToScene(30, -50));
     setSpeed(150);
 
     for (const QGraphicsItem *item : dangerMice)
@@ -86,11 +93,11 @@ void Car::timerEvent(QTimerEvent *)
 
 }
 
-QRectF Car::boundingRect() const    //metoda dziedziczona po wirtualnej metodzie w graphicsobject a dokładniej grpahicsItem
+QRectF Car::boundingRect() const    //OBSZAR RYSOWANIA
 {
     qreal adjust = 2;
     //return QRectF(-10 - adjust, -25 - adjust,20 + adjust, 45 + adjust);
-    return QRectF(-20 - adjust, -80 - adjust,40 + adjust, 100 + adjust);
+    return QRectF(-20 - adjust, -80 - adjust,40 + adjust, 150 + adjust);
 
 }
 
@@ -99,7 +106,7 @@ QPainterPath Car::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
     //path.addRect(-10, -25, 20, 45);
-    path.addRect(-10, -35, 20, 65);
+    path.addRect(-10, -35, 20, 100);
     //path.addRect(-10, -35, 20, 10);
     return path;
 
@@ -124,31 +131,27 @@ void Car::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 
 bool Car::faceToMilestone()     //skieruj samochód w kierunku następnego celu
 {
-    if(nextMilestone != NULL){
-        qDebug() << "NOT NULL pointer: faceToMilestone";
-        //std::complex<double> temp(  nextMilestone->x()-x()  ,  -(nextMilestone->y()-y())  ); //tworzy liczbę zepoloną
-        std::complex<double> temp(  nextMilestone->scenePos().x()-x()  ,  -(nextMilestone->scenePos().y()-y())  ); //tworzy liczbę zepoloną
+    if(currentMilestone != NULL){
+        //tworzy liczbę zepoloną
+        std::complex<double> temp(  currentMilestone->scenePos().x()-x()  ,  -(currentMilestone->scenePos().y()-y())  ); //tworzy liczbę zepoloną
         qreal angle = qRadiansToDegrees(  std::arg(temp)  );    //zwraca kat powyższej liczby
-        //qInfo() << "Milestone x: " << nextMilestone->x() << " y: " << nextMilestone->y() << "Car x: "<< x() << " y: " << y() << "angle: "<< angle;
         setTransform(QTransform().rotate(90-angle), false);
         return true;
     }
-    else {
-        qDebug() << "NULL pointer: faceToMilestone";
-        return false;
-    }
+    else return false;
+
 }
 
 void Car::setMilestone(Milestone *nextMS)
 {
-    nextMilestone = nextMS;
+    currentMilestone = nextMS;
 }
 
 void Car::setSpeed(qreal value)
 {
     speed = value;      //ustaw ograniczenie prędkości
     step_length = value/framerate;       //oblicz jaki to da krok na jeden krok symulacji
-    aproxDistanceToMS = qCeil(step_length/1.9); //wyzancz margines błędu osiągnicia celu z dokładnością do +- pół kroku
+    aproxDistanceToMS = qCeil(step_length/1.9); //wyzancz mLrgines błędu osiągnicia celu z dokładnością do +- pół kroku
 }
 
 

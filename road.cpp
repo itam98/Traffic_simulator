@@ -6,32 +6,40 @@
 #include <QStyleOption>
 #include <qmath.h>
 
+int Road::objCnt;
 
 Road::Road()
 {
     //L A   TODO: zmienić A i B na L i P
-    //x
+    //x>
     //P B
+    objNo = ++objCnt;
 
-    //Milestone *mA = new Milestone;
-    //Milestone *mB = new Milestone;
 
-    mA = new Milestone;
-    mB = new Milestone;
+    mL = new Milestone;
+    mP = new Milestone;
 
-    mA->setParentItem(this);
-    mA->setPos(0,-w/4);
+    mL->setParentItem(this);
+    mL->setPos(0,-w/4);
 
-    mB->setParentItem(this);
-    mB->setPos(0,w/4);
+    mP->setParentItem(this);
+    mP->setPos(0,w/4);
+
+    mL->itemsRoad = this;
+    mP->itemsRoad = this;
 }
 
+
+Road::~Road()
+{
+--objCnt;
+}
 
 QRectF Road::boundingRect() const
 {
     qreal adjust = 0.5;
-    return QRectF(-5 - adjust, -30 - adjust,
-                  10 + adjust, 60 + adjust);
+    return QRectF(-5 - adjust, -50 - adjust,
+                  10 + adjust, 80 + adjust);
 }
 
 
@@ -57,6 +65,8 @@ void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     painter->setBrush(Qt::black);
     painter->drawLine(0, -4, 9, 0);
     painter->drawLine(0, 4, 9, 0);
+    QString s = QString::number(objNo);
+    painter->drawText(0,-50, s);
 
 }
 

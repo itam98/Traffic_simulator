@@ -2,12 +2,16 @@
 #define MILESTONE_H
 
 #include <QGraphicsObject>
-//#include "road.h"
-//#include "crossroad.h"
+#include "crossroad.h"
+#include "road.h"
+
+
+class Crossroad;
+class Road;
 
 class Milestone : public QGraphicsObject
 {
-
+    Q_OBJECT
 
 public:
     Milestone();
@@ -21,11 +25,11 @@ public:
     qreal getSpeedLimit();     //zwraca limit predkosci
     void setSpeedLimit(qreal value);     //ustawia limit predkosci
 
-    Milestone *nextMilestone;    //wskaznik do nastepny punkt
-    Milestone *prevMilestone;    //wskaznik do poprzedniego punkt
+    Milestone *next;    //wskaznik do nastepny punkt
+    Milestone *prev;    //wskaznik do poprzedniego punkt
 
-    //Road * itemsRoad;
-    //Crossroad *itemsCrossroad;
+    Road *itemsRoad;
+    Crossroad *itemsCrossroad;
 
     bool isCrossroad=false;
 
