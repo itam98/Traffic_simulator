@@ -6,6 +6,8 @@
 #include <QStyleOption>
 #include <qmath.h>
 
+#include <QtWidgets>
+
 int Road::objCnt;
 
 Road::Road()
@@ -28,7 +30,6 @@ Road::Road()
     mL->itemsRoad = this;
     mP->itemsRoad = this;
 }
-
 
 Road::~Road()
 {
@@ -69,6 +70,7 @@ void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     painter->drawText(0,-50, s);
 
 }
+
 
 
 

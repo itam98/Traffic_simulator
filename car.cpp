@@ -15,7 +15,7 @@ Car::Car(Milestone *nextMS) : color(QRandomGenerator::global()->bounded(256),
     startTimer(1000/framerate);
     currentMilestone=nextMS;
     faceToMilestone();
-    defaultSpeed = 50+ QRandomGenerator::global()->bounded(400);
+    defaultSpeed = 50+ QRandomGenerator::global()->bounded(100);
 
     sensor1 = new Sensor;
     sensor1->setParentItem(this);
@@ -97,7 +97,7 @@ QRectF Car::boundingRect() const    //OBSZAR RYSOWANIA
 {
     qreal adjust = 2;
     //return QRectF(-10 - adjust, -25 - adjust,20 + adjust, 45 + adjust);
-    return QRectF(-20 - adjust, -80 - adjust,40 + adjust, 150 + adjust);
+    return QRectF(-60 - adjust, -120 - adjust,120 + adjust, 180 + adjust);
 
 }
 

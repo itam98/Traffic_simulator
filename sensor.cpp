@@ -21,7 +21,7 @@ QRectF Sensor::boundingRect() const    //metoda dziedziczona po wirtualnej metod
 QPainterPath Sensor::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
-    path.addRect(-20, -50, 40, 50);
+    path.addRect(-30, -120, 60, 120);
     return path;
 
 }
@@ -29,13 +29,13 @@ QPainterPath Sensor::shape() const     //kształt wykorzystywany w detekcji koli
 void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
 
-    painter->setBrush(QColor(200,50,50,30));
+    painter->setBrush(QColor(200,50,50,90));
     painter->setPen(Qt::NoPen);
 
     static const QPointF points[4] = {
         QPointF(0.0, -20.0),
-        QPointF(-20.0, -80.0),
-        QPointF(20.0, -80.0)
+        QPointF(-30.0, -120.0),
+        QPointF(30.0, -120.0)
     };
 
     painter->drawPolygon(points, 3);

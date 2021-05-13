@@ -100,7 +100,7 @@ QPainterPath Crossroad::shape() const     //kształt wykorzystywany w detekcji k
 void Crossroad::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setPen(Qt::NoPen);
-    painter->setBrush(QColor(145, 127, 87));
+    painter->setBrush(QColor(0, 0, 0));
     painter->drawRect(-width/2, -width/2, width, width);
 
 

@@ -11,19 +11,23 @@ CONFIG += c++11
 SOURCES += \
     car.cpp \
     crossroad.cpp \
+    entrance.cpp \
     main.cpp \
     milestone.cpp \
     road.cpp \
     router.cpp \
-    sensor.cpp
+    sensor.cpp \
+    town.cpp
 
 HEADERS += \
     car.h \
     crossroad.h \
+    entrance.h \
     milestone.h \
     road.h \
     router.h \
-    sensor.h
+    sensor.h \
+    town.h
 
 FORMS +=
 
@@ -31,3 +35,5 @@ FORMS +=
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=

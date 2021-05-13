@@ -9,14 +9,13 @@
 #include <QtWidgets>
 #include <QApplication>
 #include <QDebug>
-//#include <cmLth>
-
 
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QGraphicsScene scene;
+    //QGraphicsScene scene;
+    Router scene;
     scene.setSceneRect(0, 0, 800, 800);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
@@ -43,9 +42,7 @@ int main(int argc, char **argv)
 
     };
 
-    Crossroad cross1;
-    cross1.setPos(500,400);
-    scene.addItem(&cross1);
+
 
 
     /*int tabCrossroads[][]={ //type(T or X),
@@ -73,7 +70,7 @@ int main(int argc, char **argv)
 
 
     Road tab[15];
-    Router router;
+    //Router router;
 
 
     for(int i=0; i<14; i++){
@@ -86,14 +83,18 @@ int main(int argc, char **argv)
     int t_size = sizeof tabConn / sizeof tabConn[0];
 
     for(int i=0; i<t_size; i++){
-        router.connect(&tab[tabConn[i][0]], &tab[tabConn[i][1]]);
+        scene.connect(&scene, &tab[tabConn[i][0]], &tab[tabConn[i][1]]);
     }
 
-    router.connect(&tab[3], cross1.road[Entrance::North],false, true);
-    router.connect(cross1.road[Entrance::West], &tab[4]);
+    Crossroad cross1;
+    cross1.setPos(500,400);
+    scene.addItem(&cross1);
 
-    router.connect(cross1.road[Entrance::East], &tab[11]);
-    router.connect(&tab[13], cross1.road[Entrance::South], false, true);
+    scene.connect(&scene, &tab[3], cross1.road[Entrance::North], false, true);
+    scene.connect(&scene, cross1.road[Entrance::West], &tab[4]);
+
+    scene.connect(&scene, cross1.road[Entrance::East], &tab[11]);
+    scene.connect(&scene, &tab[13], cross1.road[Entrance::South], false, true);
 
      //router.connect(&tab[11], &tab[0]);
 
@@ -102,36 +103,36 @@ int main(int argc, char **argv)
 
 
     Car car(tab[0].mP);
-    car.setPos(tab[0].mP->pos());
+    car.setPos(tab[0].pos());
     car.setSpeed(100);
     scene.addItem(&car);
 
     Car car2(tab[8].mP);
-    car2.setPos(tab[8].mP->pos());
-    car2.setSpeed(400);
+    car2.setPos(tab[8].pos());
+    car2.setSpeed(100);
     scene.addItem(&car2);
-/*
-    Car car3(tab[8].mP);
-    car3.setPos(100,600);
+
+    /*Car car3(tab[8].mP);
+    car3.setPos(tab[8].pos());
     car3.setSpeed(100);
     scene.addItem(&car3);
 
     Car car4(tab[8].mL);
-    car4.setPos(400,650);
-    car4.setSpeed(100);
+    car4.setPos(tab[8].pos());
+    car4.setSpeed(110);
     scene.addItem(&car4);
-*/
-    /*Car car5(tab[8].mL);
-    car5.setPos(200,700);
-    car5.setSpeed(400);
+
+    Car car5(tab[8].mL);
+    car5.setPos(tab[8].pos());
+    car5.setSpeed(90);
     scene.addItem(&car5);*/
 
 
     car.faceToMilestone();
     car2.faceToMilestone();
-    //car3.faceToMilestone();
-    //car4.faceToMilestone();
-    //car5.faceToMilestone();
+    /*car3.faceToMilestone();
+    car4.faceToMilestone();
+    car5.faceToMilestone();*/
 
 
 
@@ -139,17 +140,17 @@ int main(int argc, char **argv)
     QGraphicsView view(&scene);
     //view.scale(0.5 , 0.5);
     view.setRenderHint(QPainter::Antialiasing);
-    //view.setBackgroundBrush(QPixmLp(":/imLges/background.jpg"));
+    view.setBackgroundBrush(QPixmap("bg.jpg"));
 
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view.setDragMode(QGraphicsView::ScrollHandDrag);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic Simulator"));
-    //view.resize(900, 900);
-    //view.show();
+    view.resize(900, 900);
+    view.show();
     //view.showmLximized();
-    view.showMinimized();
+    //view.showMinimized();
 
     //QTimer timer;
     //QObject::connect(&timer, &QTimer::timeout, &scene, &QGraphicsScene::advance);

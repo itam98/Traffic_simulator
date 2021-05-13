@@ -5,6 +5,7 @@
 #include "milestone.h"
 #include <QDebug>
 
+
 enum Side {front, back}; //used also in crossroad class
 
 class Milestone;
@@ -31,8 +32,11 @@ public:
 
     bool isCrossroad=false;
 
+
+
 protected:
     const int w=80; //width of the road
+
 
 private:
 
