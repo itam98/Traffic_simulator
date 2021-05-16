@@ -42,5 +42,26 @@ void Map::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bo
     scene->addLine(a.x(), a.y(),b.x(),b.y(),pen);
 
 
+    return;
+}
 
+
+
+void Map::loadFromFile(){
+
+    QFile file("saves/default");
+
+    if(!file.open(QIODevice::ReadOnly| QIODevice::Text))
+    {
+        qDebug() << "error opening file: " << file.error();
+        return;
+    }
+
+    QTextStream instream(&file);
+    QString line = instream.readLine();
+
+    qDebug() << "first line: " << line;
+    file.close();
+
+    return;
 }

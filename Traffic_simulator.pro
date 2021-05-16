@@ -35,12 +35,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    saves/default
-DISTFILES += \
-    saves/default
-DISTFILES += \
-    Map.txt \
-    Map.txt \
-    Map.txt \
-    saves/default \
-    saves/default
+    saves/default.txt

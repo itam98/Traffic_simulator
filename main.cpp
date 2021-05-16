@@ -1,5 +1,6 @@
 
 #include "car/car.h"
+
 #include "map/milestone.h"
 #include "map/crossroad.h"
 #include "map/road.h"
@@ -19,6 +20,8 @@ int main(int argc, char **argv)
     scene.setSceneRect(0, 0, 800, 800);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
+
+    scene.loadFromFile();
 
     struct element {
 
@@ -92,8 +95,6 @@ int main(int argc, char **argv)
     };*/
 
 
-
-
     int tabConn[][2]={
         {0, 1},
         {1, 2},
@@ -110,10 +111,7 @@ int main(int argc, char **argv)
         {12,13},
     };
 
-
-
     Road tab[15];
-    //Router router;
 
 
     for(int i=0; i<14; i++){
