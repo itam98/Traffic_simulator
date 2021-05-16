@@ -26,6 +26,8 @@ Car::Car(Milestone *nextMS) : color(QRandomGenerator::global()->bounded(256),
 void Car::timerEvent(QTimerEvent *)
 {
     if(currentMilestone != NULL){
+        faceToMilestone();  //dodane w każdym kroku TODO:usunąć to
+
         //sprawdza odległóść do obiektu
         QLineF lineToMilestone(scenePos(), currentMilestone->scenePos());
         if (lineToMilestone.length() > aproxDistanceToMS)           //sprawdź czy punkt został osiagnięty

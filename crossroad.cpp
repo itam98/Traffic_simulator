@@ -43,7 +43,7 @@ Crossroad::Crossroad()
     }
 
 
-
+    this->setFlag(QGraphicsItem::ItemIsMovable);
 
 }
 

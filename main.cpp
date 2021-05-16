@@ -3,7 +3,7 @@
 #include "milestone.h"
 #include "crossroad.h"
 #include "road.h"
-#include "router.h"
+#include "map.h"
 
 #include <QtMath>
 #include <QtWidgets>
@@ -15,15 +15,64 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     //QGraphicsScene scene;
-    Router scene;
+    Map scene;
     scene.setSceneRect(0, 0, 800, 800);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
 
 
+    struct element {
 
+
+        int x,y;
+        int rotation;
+        int type = 1; //1-raod, 2-crossroad
+
+        element(int ix, int iy,int irot, int itype) :
+            x(ix), y(iy),rotation(irot),type(itype){}
+
+    };
+
+    struct connection {
+
+        int element1_id;
+        bool element1_inv;
+        int element1_type; //0-milestone 1-raod, 2-crossroad
+        Entrance entrance1;
+
+        int element2_id;
+        bool element2_inv;
+        bool element2_type;
+        Entrance entrance2;
+
+        connection(int id1, int inv1,int type1, int id2, int inv2,int type2) : element1_id(id1), element1_inv(inv1),
+            element1_type(type1),element2_id(id2), element2_inv(inv2),element2_type(type2) {}
+
+
+    };
+
+
+    QList<element> listOfElements;
+    QList<Road> listOfRoads;
+    QList<Crossroad> listOfCrossroads;
+
+    listOfElements.append(element(300,80,0,1));     //0
+    listOfElements.append(element(400,100,45,1));
+    listOfElements.append(element(500,200,45,1));
+    listOfElements.append(element(500,300,90,1));
+    listOfElements.append(element(400,400,180,1));
+    listOfElements.append(element(300,420,150,1));
+    listOfElements.append(element(200,450,180,1));
+    listOfElements.append(element(100,400,-135,1));
+    listOfElements.append(element(80,300,-90,1));
+    listOfElements.append(element(100,200,-45,1));
+    listOfElements.append(element(200,100,-45,1));  //10
+
+    listOfElements.append(element(700,400,45,1));   //11
+    listOfElements.append(element(700,600,135,1));
+    listOfElements.append(element(500,600,-135,1));
 
     // tab parameters {x, y, angle} TODO: odczyt z pliku
-    int tabRoads[14][3]={
+    /*int tabRoads[14][3]={
         {300,80,0},     //0
         {400,100,45},
         {500,200,45},
@@ -40,16 +89,10 @@ int main(int argc, char **argv)
         {700,600,135},
         {500,600,-135}
 
-    };
+    };*/
 
 
 
-
-    /*int tabCrossroads[][]={ //type(T or X),
-        {, 500,500,0
-
-
-    }*/
 
     int tabConn[][2]={
         {0, 1},
@@ -74,11 +117,18 @@ int main(int argc, char **argv)
 
 
     for(int i=0; i<14; i++){
+            tab[i].setPos(listOfElements[i].x,listOfElements[i].y);
+            tab[i].setRotation(listOfElements[i].rotation);
+            scene.addItem(&tab[i]);
+
+        }
+
+    /*for(int i=0; i<14; i++){
         tab[i].setPos(tabRoads[i][0],tabRoads[i][1]);
         tab[i].setRotation(tabRoads[i][2]);
         scene.addItem(&tab[i]);
 
-    }
+    }*/
 
     int t_size = sizeof tabConn / sizeof tabConn[0];
 
@@ -95,8 +145,6 @@ int main(int argc, char **argv)
 
     scene.connect(&scene, cross1.road[Entrance::East], &tab[11]);
     scene.connect(&scene, &tab[13], cross1.road[Entrance::South], false, true);
-
-     //router.connect(&tab[11], &tab[0]);
 
 
 
@@ -142,6 +190,9 @@ int main(int argc, char **argv)
     view.setRenderHint(QPainter::Antialiasing);
     view.setBackgroundBrush(QPixmap("bg.jpg"));
 
+    view.horizontalScrollBar()->setStyleSheet("QScrollBar {height:0px;}");  //hide scrollbar
+    view.verticalScrollBar()->setStyleSheet("QScrollBar {width:0px;}");
+
     view.setCacheMode(QGraphicsView::CacheBackground);
     view.setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view.setDragMode(QGraphicsView::ScrollHandDrag);
@@ -149,7 +200,7 @@ int main(int argc, char **argv)
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic Simulator"));
     view.resize(900, 900);
     view.show();
-    //view.showmLximized();
+    //view.showMaximized();
     //view.showMinimized();
 
     //QTimer timer;

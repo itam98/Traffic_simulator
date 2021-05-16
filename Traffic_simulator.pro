@@ -13,21 +13,19 @@ SOURCES += \
     crossroad.cpp \
     entrance.cpp \
     main.cpp \
+    map.cpp \
     milestone.cpp \
     road.cpp \
-    router.cpp \
-    sensor.cpp \
-    town.cpp
+    sensor.cpp
 
 HEADERS += \
     car.h \
     crossroad.h \
     entrance.h \
+    map.h \
     milestone.h \
     road.h \
-    router.h \
-    sensor.h \
-    town.h
+    sensor.h
 
 FORMS +=
 

@@ -1,16 +1,12 @@
-#include "router.h"
+#include "map.h"
 
-
-Router::Router()
+Map::Map()
 {
 
 }
 
 
-
-
-
-void Router::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bool inv2)
+void Map::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bool inv2)
 {
     if(inv1==false && inv2==false){
         road1->mP->next = road2->mP;
@@ -48,4 +44,3 @@ void Router::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1,
 
 
 }
-

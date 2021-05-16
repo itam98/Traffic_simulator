@@ -4,6 +4,7 @@
 #include <QGraphicsObject>
 #include "milestone.h"
 #include <QDebug>
+#include <QMouseEvent>
 
 
 enum Side {front, back}; //used also in crossroad class
@@ -34,6 +35,7 @@ public:
 
 
 
+
 protected:
     const int w=80; //width of the road
 
@@ -41,7 +43,7 @@ protected:
 private:
 
     qreal speedLimit;    //przechowuje informLcje o limicie prędkości
-
+    QPoint offset;
 };
 
 #endif // ROAD_H

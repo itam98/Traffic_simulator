@@ -6,12 +6,11 @@
 #include <QStyleOption>
 #include <qmath.h>
 
-#include <QtWidgets>
+
 
 int Road::objCnt;
 
-Road::Road()
-{
+Road::Road(){
     //L A   TODO: zmienić A i B na L i P
     //x>
     //P B
@@ -29,6 +28,7 @@ Road::Road()
 
     mL->itemsRoad = this;
     mP->itemsRoad = this;
+    this->setFlag(QGraphicsItem::ItemIsMovable);
 }
 
 Road::~Road()
@@ -39,8 +39,8 @@ Road::~Road()
 QRectF Road::boundingRect() const
 {
     qreal adjust = 0.5;
-    return QRectF(-5 - adjust, -50 - adjust,
-                  10 + adjust, 80 + adjust);
+    return QRectF(-10 - adjust, -70 - adjust,
+                  20 + adjust, 120 + adjust);
 }
 
 
