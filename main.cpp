@@ -188,7 +188,8 @@ int main(int argc, char **argv)
     QGraphicsView view(&scene);
     //view.scale(0.5 , 0.5);
     view.setRenderHint(QPainter::Antialiasing);
-    view.setBackgroundBrush(QPixmap("bg.jpg"));
+    //view.setBackgroundBrush(QPixmap("bg.jpg"));
+
 
     view.horizontalScrollBar()->setStyleSheet("QScrollBar {height:0px;}");  //hide scrollbar
     view.verticalScrollBar()->setStyleSheet("QScrollBar {width:0px;}");
