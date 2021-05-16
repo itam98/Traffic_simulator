@@ -9,23 +9,23 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    car.cpp \
-    crossroad.cpp \
-    entrance.cpp \
+    car/car.cpp \
+    car/sensor.cpp \
     main.cpp \
-    map.cpp \
-    milestone.cpp \
-    road.cpp \
-    sensor.cpp
+    map/map.cpp \
+    map/crossroad.cpp \
+    map/entrance.cpp \
+    map/milestone.cpp \
+    map/road.cpp \
 
 HEADERS += \
-    car.h \
-    crossroad.h \
-    entrance.h \
-    map.h \
-    milestone.h \
-    road.h \
-    sensor.h
+    car/car.h \
+    car/sensor.h \
+    map/map.h \
+    map/crossroad.h \
+    map/entrance.h \
+    map/milestone.h \
+    map/road.h \
 
 FORMS +=
 

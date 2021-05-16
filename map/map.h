@@ -7,9 +7,9 @@
 #include <QtWidgets>
 #include <QApplication>
 
-#include "milestone.h"
-#include "crossroad.h"
-#include "road.h"
+#include "map/milestone.h"
+#include "map/crossroad.h"
+#include "map/road.h"
 
 enum Element_type {tMilestone=0, tRoad=1, tCrossroad=2};
 

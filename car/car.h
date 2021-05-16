@@ -2,7 +2,7 @@
 #define CAR_H
 
 #include <QGraphicsObject>
-#include "milestone.h"
+#include "../map/milestone.h"
 #include "sensor.h"
 
 class Car : public QGraphicsObject

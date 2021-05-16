@@ -1,9 +1,9 @@
 
-#include "car.h"
-#include "milestone.h"
-#include "crossroad.h"
-#include "road.h"
-#include "map.h"
+#include "car/car.h"
+#include "map/milestone.h"
+#include "map/crossroad.h"
+#include "map/road.h"
+#include "map/map.h"
 
 #include <QtMath>
 #include <QtWidgets>
