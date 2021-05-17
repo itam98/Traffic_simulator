@@ -23,7 +23,6 @@ int main(int argc, char **argv)
     scene.init();
 
 
-
     Car car(scene.tab[0].mP);
     car.setPos(scene.tab[0].pos());
     car.setSpeed(100);
@@ -55,6 +54,7 @@ int main(int argc, char **argv)
     /*car3.faceToMilestone();
     car4.faceToMilestone();
     car5.faceToMilestone();*/
+
 
 
 

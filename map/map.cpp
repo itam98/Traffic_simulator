@@ -192,8 +192,8 @@ void Map::loadFromFile(QString name){
 
         line_index++;
     }
-        qDebug()<<"roads_index:"<<roads_index<<"crossroads_index:"<<crossroads_index<<"connections_index:"<<connections_index;
-        qDebug()<<"roads_cnt:"<<roads_cnt<<"crossroads_cnt:"<<crossroads_cnt<<"connections_cnt:"<<connections_cnt;
+        //qDebug()<<"roads_index:"<<roads_index<<"crossroads_index:"<<crossroads_index<<"connections_index:"<<connections_index;
+        //qDebug()<<"roads_cnt:"<<roads_cnt<<"crossroads_cnt:"<<crossroads_cnt<<"connections_cnt:"<<connections_cnt;
 
 
 
