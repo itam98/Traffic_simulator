@@ -223,3 +223,65 @@ void Map::loadFromFile(QString name){
 
     return;
 }
+
+
+
+
+void Map::init(){
+
+
+
+    for(int i=0; i<14; i++){
+            tab[i].setPos(loadedRoads[i].x,loadedRoads[i].y);
+            tab[i].setRotation(loadedRoads[i].rotation);
+            addItem(&tab[i]);
+    }
+
+
+
+    tabCross[0].setPos(500,400);
+    addItem(&tabCross[0]);
+
+    for(int i=0; i<numberOfConnections; i++){
+        if(loadedConnections[i].type1 == Element_type::tRoad && loadedConnections[i].type2 == Element_type::tRoad){
+            Road *road1 = &tab[loadedConnections[i].id1];
+            Road *road2 = &tab[loadedConnections[i].id2];
+            connect(this, road1 ,road2 , loadedConnections[i].inv1, loadedConnections[i].inv2);
+
+        }
+        else if(loadedConnections[i].type1 == Element_type::tRoad && loadedConnections[i].type2 == Element_type::tCrossroad){
+            Road *road1 = &tab[loadedConnections[i].id1];
+
+            int _id2 = loadedConnections[i].id2;
+            Entrance n = loadedConnections[i].entrance2;
+            Road *road2 = tabCross[_id2].road[n];
+
+            connect(this, road1, road2, loadedConnections[i].inv1, loadedConnections[i].inv2);
+        }
+        else if(loadedConnections[i].type1 == Element_type::tCrossroad && loadedConnections[i].type2 == Element_type::tRoad){
+            int _id1 = loadedConnections[i].id1;
+            Entrance n = loadedConnections[i].entrance1;
+            Road *road1 = tabCross[_id1].road[n];
+
+            Road *road2 = &tab[loadedConnections[i].id2];
+            connect(this, road1,road2 , loadedConnections[i].inv1, loadedConnections[i].inv2);
+        }
+        else if(loadedConnections[i].type1 == Element_type::tCrossroad && loadedConnections[i].type2 == Element_type::tCrossroad){
+            int _id1 = loadedConnections[i].id1;
+            int _id2 = loadedConnections[i].id2;
+
+            Entrance n = loadedConnections[i].entrance1;
+            Road *road1 = tabCross[_id1].road[n];
+
+            n = loadedConnections[i].entrance2;
+            Road *road2 = tabCross[_id2].road[n];
+
+            connect(this, road1, road2, loadedConnections[i].inv1, loadedConnections[i].inv2);
+        }
+    }
+
+
+}
+
+
+

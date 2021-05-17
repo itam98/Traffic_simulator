@@ -20,71 +20,17 @@ int main(int argc, char **argv)
     scene.setSceneRect(0, 0, 800, 800);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
     scene.loadFromFile("../Traffic_simulator/saves/default.txt");
+    scene.init();
 
 
 
-
-    Road tab[15];
-
-
-    for(int i=0; i<14; i++){
-            tab[i].setPos(scene.loadedRoads[i].x,scene.loadedRoads[i].y);
-            tab[i].setRotation(scene.loadedRoads[i].rotation);
-            scene.addItem(&tab[i]);
-    }
-
-
-    Crossroad tabCross[1];
-    tabCross[0].setPos(500,400);
-    scene.addItem(&tabCross[0]);
-
-
-    for(int i=0; i<scene.numberOfConnections; i++){
-        if(scene.loadedConnections[i].type1 == Element_type::tRoad && scene.loadedConnections[i].type2 == Element_type::tRoad){
-            Road *road1 = &tab[scene.loadedConnections[i].id1];
-            Road *road2 = &tab[scene.loadedConnections[i].id2];
-            scene.connect(&scene, road1 ,road2 , scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
-
-        }
-        else if(scene.loadedConnections[i].type1 == Element_type::tRoad && scene.loadedConnections[i].type2 == Element_type::tCrossroad){
-            Road *road1 = &tab[scene.loadedConnections[i].id1];
-
-            int _id2 = scene.loadedConnections[i].id2;
-            Entrance n = scene.loadedConnections[i].entrance2;
-            Road *road2 = tabCross[_id2].road[n];
-
-            scene.connect(&scene, road1, road2, scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
-        }
-        else if(scene.loadedConnections[i].type1 == Element_type::tCrossroad && scene.loadedConnections[i].type2 == Element_type::tRoad){
-            int _id1 = scene.loadedConnections[i].id1;
-            Entrance n = scene.loadedConnections[i].entrance1;
-            Road *road1 = tabCross[_id1].road[n];
-
-            Road *road2 = &tab[scene.loadedConnections[i].id2];
-            scene.connect(&scene, road1,road2 , scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
-        }
-        else if(scene.loadedConnections[i].type1 == Element_type::tCrossroad && scene.loadedConnections[i].type2 == Element_type::tCrossroad){
-            int _id1 = scene.loadedConnections[i].id1;
-            int _id2 = scene.loadedConnections[i].id2;
-
-            Entrance n = scene.loadedConnections[i].entrance1;
-            Road *road1 = tabCross[_id1].road[n];
-
-            n = scene.loadedConnections[i].entrance2;
-            Road *road2 = tabCross[_id2].road[n];
-
-            scene.connect(&scene, road1, road2, scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
-        }
-    }
-
-
-    Car car(tab[0].mP);
-    car.setPos(tab[0].pos());
+    Car car(scene.tab[0].mP);
+    car.setPos(scene.tab[0].pos());
     car.setSpeed(100);
     scene.addItem(&car);
 
-    Car car2(tab[8].mP);
-    car2.setPos(tab[8].pos());
+    Car car2(scene.tab[8].mP);
+    car2.setPos(scene.tab[8].pos());
     car2.setSpeed(100);
     scene.addItem(&car2);
 

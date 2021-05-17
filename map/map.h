@@ -46,6 +46,11 @@ public:
 
     int numberOfConnections;
 
+    Road tab[15];
+    Crossroad tabCross[1];
+
+    void init();
+
     int loadedSceneRect[4];
     QList<coord> loadedRoads;
     QList<coord> loadedCrossroads;
