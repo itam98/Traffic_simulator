@@ -7,6 +7,7 @@
 #include <QtWidgets>
 #include <QApplication>
 
+
 #include "map/milestone.h"
 #include "map/crossroad.h"
 #include "map/road.h"
@@ -38,7 +39,7 @@ public:
 
 
     QList<Road *> listOfRoads;
-    QList<Crossroad> listOfCrossroads;
+    QList<Crossroad *> listOfCrossroads;
 
     void connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1=false, bool inv2=false);
 
@@ -46,18 +47,24 @@ public:
 
     int numberOfConnections;
 
-    Road tab[15];
-    Crossroad tabCross[1];
+    //Road tab[15];
+    //Crossroad tabCross[1];
 
     void init();
 
     int loadedSceneRect[4];
+
+
+
+
+private:
     QList<coord> loadedRoads;
     QList<coord> loadedCrossroads;
     QList<connection> loadedConnections;
 
-private:
-
+    QList<coord> toSaveRoads;
+    QList<coord> toSaveCrossroads;
+    QList<connection> toSaveConnections;
 
 };
 

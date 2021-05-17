@@ -16,7 +16,7 @@ class Road : public QGraphicsObject
     Q_OBJECT
 
 public:
-    Road();
+    Road(bool isCrossroad=false);
     ~Road();
 
     int objNo;
@@ -31,8 +31,8 @@ public:
 
     void connect(Road *road2, int side);
 
-    bool isCrossroad=false;
 
+    bool isCrossroad;
 
 
 
@@ -44,6 +44,7 @@ private:
 
     qreal speedLimit;    //przechowuje informLcje o limicie prędkości
     QPoint offset;
+
 };
 
 #endif // ROAD_H

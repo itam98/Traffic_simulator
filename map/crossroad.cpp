@@ -24,7 +24,7 @@ Crossroad::Crossroad()
     };
 
     for(int i=0; i<4; i++){     //create crossroad entrances
-        road[i] = new Road;
+        road[i] = new Road(true);
         road[i]->setParentItem(this);
         road[i]->setPos(coord[i][0], coord[i][1]);
         road[i]->setRotation(coord[i][2]);
@@ -43,7 +43,8 @@ Crossroad::Crossroad()
     }
 
 
-    this->setFlag(QGraphicsItem::ItemIsMovable);
+    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
+
 
 }
 
@@ -105,5 +106,20 @@ void Crossroad::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 
 
 }
+
+
+QVariant Crossroad::itemChange(GraphicsItemChange change, const QVariant &value){
+    qDebug() << "New pos:"<<pos();
+    if (change == ItemPositionChange) {
+        qDebug() << "New pos:"<<pos();
+    }
+    return QGraphicsItem::itemChange(change, value);
+
+
+
+
+}
+
+
 
 

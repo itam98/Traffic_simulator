@@ -10,11 +10,13 @@
 
 int Road::objCnt;
 
-Road::Road(){
+Road::Road(bool isCrossroad){
     //L A   TODO: zmienić A i B na L i P
     //x>
     //P B
-    objNo = ++objCnt;
+
+    if( !isCrossroad ) objNo = ++objCnt-1;
+    else objNo = -1;
 
 
     mL = new Milestone;
@@ -28,12 +30,12 @@ Road::Road(){
 
     mL->itemsRoad = this;
     mP->itemsRoad = this;
-    this->setFlag(QGraphicsItem::ItemIsMovable);
+    if(!isCrossroad)this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
 }
 
 Road::~Road()
 {
---objCnt;
+    if( !isCrossroad )--objCnt;
 }
 
 QRectF Road::boundingRect() const
@@ -66,9 +68,10 @@ void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     painter->setBrush(Qt::black);
     painter->drawLine(0, -4, 9, 0);
     painter->drawLine(0, 4, 9, 0);
-    QString s = QString::number(objNo);
-    painter->drawText(0,-50, s);
-
+    if( objNo != -1 ){
+        QString s = QString::number(objNo);
+        painter->drawText(0,-50, s);
+    }
 }
 
 
