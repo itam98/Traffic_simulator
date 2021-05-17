@@ -112,6 +112,7 @@ QVariant Crossroad::itemChange(GraphicsItemChange change, const QVariant &value)
     qDebug() << "New pos:"<<pos();
     if (change == ItemPositionChange) {
         qDebug() << "New pos:"<<pos();
+        //TODO: dodać wyświetlaniei położenia na dolnym pasku
     }
     return QGraphicsItem::itemChange(change, value);
 

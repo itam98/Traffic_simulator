@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/road_icon.png</file>
+        <file>images/crossroad_icon.png</file>
+    </qresource>
+</RCC>

@@ -10,14 +10,18 @@
 #include <QtWidgets>
 #include <QApplication>
 #include <QDebug>
+#include <QMenuBar>
 
+#include "mainwindow.h"
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
+
+
+
     //QGraphicsScene scene;
     Map scene;
-    scene.setSceneRect(0, 0, 800, 800);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
     scene.loadFromFile("../Traffic_simulator/saves/default.txt");
     scene.init();
@@ -57,6 +61,10 @@ int main(int argc, char **argv)
 
 
 
+    QMenuBar *menu = new QMenuBar;
+    QMenu *file = new QMenu();
+    file->addMenu("&File");
+    menu->addMenu(file);
 
 
     QGraphicsView view(&scene);
@@ -74,14 +82,17 @@ int main(int argc, char **argv)
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic Simulator"));
     view.resize(900, 900);
-    view.show();
+
+    MainWindow mainWin;
+    mainWin.setCentralWidget(&view);
+    //view.show();
     //view.showMaximized();
     //view.showMinimized();
 
     //QTimer timer;
     //QObject::connect(&timer, &QTimer::timeout, &scene, &QGraphicsScene::advance);
     //timer.start(1000 / 33);
-
+    mainWin.show();
 
     return app.exec();
 }

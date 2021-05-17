@@ -12,6 +12,7 @@ SOURCES += \
     car/car.cpp \
     car/sensor.cpp \
     main.cpp \
+    mainwindow.cpp \
     map/map.cpp \
     map/crossroad.cpp \
     map/entrance.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     car/car.h \
     car/sensor.h \
+    mainwindow.h \
     map/map.h \
     map/crossroad.h \
     map/entrance.h \
@@ -37,3 +39,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     saves/default.txt \
     window.png
+
+RESOURCES += \
+    MyResources.qrc

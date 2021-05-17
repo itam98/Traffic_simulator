@@ -227,6 +227,7 @@ void Map::loadFromFile(QString name){
 
 void Map::init(){
 
+    setSceneRect(loadedSceneRect[0], loadedSceneRect[1], loadedSceneRect[2], loadedSceneRect[3]);
 
     for(int i=0; i<loadedRoads.length(); i++){      //creating road objects basing on loadedRoads
         Road* temp = new Road;
