@@ -6,7 +6,7 @@
 #include "road.h"
 
 enum Direction { left, straight, right};    //direction on crossroad
-enum Entrance {North, East, South, West};
+enum Entrance {None=-1, North=0, East=1, South=2, West=3};
 
 
 class Milestone;

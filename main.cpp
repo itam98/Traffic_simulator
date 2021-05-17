@@ -19,11 +19,10 @@ int main(int argc, char **argv)
     Map scene;
     scene.setSceneRect(0, 0, 800, 800);
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
+    scene.loadFromFile("../Traffic_simulator/saves/default.txt");
 
 
-    scene.loadFromFile();
-
-    struct element {
+    /*struct element {
 
 
         int x,y;
@@ -33,9 +32,9 @@ int main(int argc, char **argv)
         element(int ix, int iy,int irot, int itype) :
             x(ix), y(iy),rotation(irot),type(itype){}
 
-    };
+    };*/
 
-    struct connection {
+    /*struct connection {
 
         int element1_id;
         bool element1_inv;
@@ -51,14 +50,14 @@ int main(int argc, char **argv)
             element1_type(type1),element2_id(id2), element2_inv(inv2),element2_type(type2) {}
 
 
-    };
+    };*/
 
 
-    QList<element> listOfElements;
-    QList<Road> listOfRoads;
-    QList<Crossroad> listOfCrossroads;
+    //QList<element> listOfElements;
+    //QList<Road> listOfRoads;
+    //QList<Crossroad> listOfCrossroads;
 
-    listOfElements.append(element(300,80,0,1));     //0
+    /*listOfElements.append(element(300,80,0,1));     //0
     listOfElements.append(element(400,100,45,1));
     listOfElements.append(element(500,200,45,1));
     listOfElements.append(element(500,300,90,1));
@@ -72,7 +71,7 @@ int main(int argc, char **argv)
 
     listOfElements.append(element(700,400,45,1));   //11
     listOfElements.append(element(700,600,135,1));
-    listOfElements.append(element(500,600,-135,1));
+    listOfElements.append(element(500,600,-135,1));*/
 
     // tab parameters {x, y, angle} TODO: odczyt z pliku
     /*int tabRoads[14][3]={
@@ -95,31 +94,17 @@ int main(int argc, char **argv)
     };*/
 
 
-    int tabConn[][2]={
-        {0, 1},
-        {1, 2},
-        {2, 3},
-        //{3, 4},
-        {4, 5},
-        {5, 6},
-        {6, 7},
-        {7, 8},
-        {8, 9},
-        {9, 10},
-        {10, 0},
-        {11, 12},
-        {12,13},
-    };
 
     Road tab[15];
 
 
     for(int i=0; i<14; i++){
-            tab[i].setPos(listOfElements[i].x,listOfElements[i].y);
-            tab[i].setRotation(listOfElements[i].rotation);
+            tab[i].setPos(scene.loadedRoads[i].x,scene.loadedRoads[i].y);
+            tab[i].setRotation(scene.loadedRoads[i].rotation);
             scene.addItem(&tab[i]);
-
-        }
+    }
+    qDebug() <<"aaa: "<<scene.loadedRoads[0].y;
+    qDebug() <<"aaa: "<<tab[0].pos().y();
 
     /*for(int i=0; i<14; i++){
         tab[i].setPos(tabRoads[i][0],tabRoads[i][1]);
@@ -128,24 +113,66 @@ int main(int argc, char **argv)
 
     }*/
 
-    int t_size = sizeof tabConn / sizeof tabConn[0];
 
-    for(int i=0; i<t_size; i++){
+
+    /*for(int i=0; i<t_size; i++){
         scene.connect(&scene, &tab[tabConn[i][0]], &tab[tabConn[i][1]]);
-    }
+    }*/
 
-    Crossroad cross1;
-    cross1.setPos(500,400);
-    scene.addItem(&cross1);
-
-    scene.connect(&scene, &tab[3], cross1.road[Entrance::North], false, true);
+    Crossroad tabCross[0];
+    tabCross[0].setPos(500,400);
+    scene.addItem(&tabCross[0]);
+/*
+    scene.connect(&scene, &tab[3], cross1.road[Entrance::North], false, true); <-------------
     scene.connect(&scene, cross1.road[Entrance::West], &tab[4]);
 
     scene.connect(&scene, cross1.road[Entrance::East], &tab[11]);
     scene.connect(&scene, &tab[13], cross1.road[Entrance::South], false, true);
 
+*/
+    for(int i=0; i<14; i++){
+        if(scene.loadedConnections[i].type1 == Element_type::tRoad && scene.loadedConnections[i].type2 == Element_type::tRoad){
+            qDebug()<< "loaded: ("<< scene.loadedConnections[i].type1<< ","<< scene.loadedConnections[i].type2<< ","<< scene.loadedConnections[i].id1<< ","
+                << scene.loadedConnections[i].id2<< ","<< scene.loadedConnections[i].entrance1<< ","<< scene.loadedConnections[i].entrance2<< ","
+                << scene.loadedConnections[i].inv1<< ","<< scene.loadedConnections[i].inv2<<")";
 
+            Road *road1 = &tab[scene.loadedConnections[i].id1];
+            Road *road2 = &tab[scene.loadedConnections[i].id2];
+            scene.connect(&scene, road1 ,road2 , scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
 
+        }
+
+        /*else if(scene.loadedConnections[i].type1 == Element_type::tRoad && scene.loadedConnections[i].type2 == Element_type::tCrossroad){
+            int _id1 = scene.loadedConnections[i].id1;
+            int _id2 = scene.loadedConnections[i].id2;
+
+            Entrance n = scene.loadedConnections[i].entrance2;
+            Road *road2 = tabCross[_id2].road[n];
+
+            scene.connect(&scene, &tab[_id1], road2, scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
+        }
+        else if(scene.loadedConnections[i].type1 == Element_type::tCrossroad && scene.loadedConnections[i].type2 == Element_type::tRoad){
+            int _id1 = scene.loadedConnections[i].id1;
+            int _id2 = scene.loadedConnections[i].id2;
+
+            Entrance n = scene.loadedConnections[i].entrance1;
+            Road *road1 = tabCross[_id1].road[n];
+
+            scene.connect(&scene, road1, &tab[_id2], scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
+        }
+        else if(scene.loadedConnections[i].type1 == Element_type::tCrossroad && scene.loadedConnections[i].type2 == Element_type::tCrossroad){
+            int _id1 = scene.loadedConnections[i].id1;
+            int _id2 = scene.loadedConnections[i].id2;
+
+            Entrance n = scene.loadedConnections[i].entrance1;
+            Road *road1 = tabCross[_id1].road[n];
+
+            n = scene.loadedConnections[i].entrance2;
+            Road *road2 = tabCross[_id2].road[n];
+
+            scene.connect(&scene, road1, road2, scene.loadedConnections[i].inv1, scene.loadedConnections[i].inv2);
+        }*/
+    }
 
 
     Car car(tab[0].mP);

@@ -13,15 +13,21 @@
 
 enum Element_type {tMilestone=0, tRoad=1, tCrossroad=2};
 
-struct element {
+struct coord {
     int x,y;
     int rotation;
-    Element_type type; //1-raod, 2-crossroad
-    element(int ix, int iy,int irot, Element_type itype) :
-        x(ix), y(iy),rotation(irot),type(itype){}
+    coord(int ix, int iy,int irot) :
+        x(ix), y(iy),rotation(irot){}
 };
 
-
+struct connection{
+    Element_type type1, type2;
+    int id1, id2;
+    Entrance entrance1, entrance2;
+    bool inv1, inv2;
+    connection(Element_type t1, Element_type t2,int id1, int id2, Entrance ent1, Entrance ent2, bool inv1, bool inv2) :
+        type1(t1), type2(t2),id1(id1),id2(id2),entrance1(ent1),entrance2(ent2),inv1(inv1),inv2(inv2){}
+};
 
 class Map : public QGraphicsScene
 {
@@ -30,13 +36,23 @@ class Map : public QGraphicsScene
 public:
     Map();
 
-    QList<element> listOfElements;
+    QList<coord> listOfElements;
     QList<Road> listOfRoads;
     QList<Crossroad> listOfCrossroads;
 
     void connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1=false, bool inv2=false);
 
-    void loadFromFile();
+    void loadFromFile(QString name);
+
+    int numberOfConnections;
+
+    int loadedSceneRect[4];
+    QList<coord> loadedRoads;
+    QList<coord> loadedCrossroads;
+    QList<connection> loadedConnections;
+
+private:
+
 
 };
 
