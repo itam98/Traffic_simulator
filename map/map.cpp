@@ -36,8 +36,6 @@ void Map::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bo
     pen.setDashOffset(10);
 
 
-    //painter.drawArc(rectangle, startAngle, spanAngle);
-
     scene->addLine(a.x(), a.y(),b.x(),b.y(),pen2);
     scene->addLine(a.x(), a.y(),b.x(),b.y(),pen);
 
@@ -62,7 +60,7 @@ void Map::loadFromFile(QString name){
     QTextStream stream(&file);
 
     int line_index=0;   //index of line
-    int roads_index, crossroads_index, connections_index;
+    //int roads_index, crossroads_index, connections_index;
     int roads_cnt=0, crossroads_cnt=0, connections_cnt=0;
     bool flag_r=false, flag_c=false, flag_conn=false;
 
@@ -101,8 +99,8 @@ void Map::loadFromFile(QString name){
         }
 
 
-        if( line.indexOf("$ROADS;") != -1){
-            roads_index = line_index;
+        if( line.indexOf("$ROADS;") != -1){   //set flag if found ROADS data block
+            //roads_index = line_index;
             flag_r=true;
         }
         //----------------------------------
@@ -128,8 +126,8 @@ void Map::loadFromFile(QString name){
         }
 
 
-        if( line.indexOf("$CROSSROADS;") != -1){
-            crossroads_index = line_index;
+        if( line.indexOf("$CROSSROADS;") != -1){   //set flag if found CROSSROADS data block
+            //crossroads_index = line_index;
             flag_c=true;
         }
         //----------------------------------
@@ -180,8 +178,8 @@ void Map::loadFromFile(QString name){
         }
 
 
-        if( line.indexOf("$CONNECTIONS;") != -1){
-            connections_index = line_index;
+        if( line.indexOf("$CONNECTIONS;") != -1){   //set flag if found CONNECTIONS data block
+            //connections_index = line_index;
             flag_conn=true;
         }
         //----------------------------------
@@ -198,7 +196,7 @@ void Map::loadFromFile(QString name){
 
 
 
-
+/*
     qDebug()<<"ROADS";
     for(int i=0; i<roads_cnt;i++){
         qDebug()<< "("<< loadedRoads[i].x<< ","<< loadedRoads[i].y<< ","<< loadedRoads[i].rotation<<")";
@@ -215,7 +213,7 @@ void Map::loadFromFile(QString name){
         for(int i=0; i<connections_cnt;i++){
         qDebug()<< "("<< loadedConnections[i].type1<< ","<< loadedConnections[i].type2<< ","<< loadedConnections[i].id1<< ","<< loadedConnections[i].id2<< ","<< loadedConnections[i].entrance1<< ","<< loadedConnections[i].entrance2<< ","<< loadedConnections[i].inv1<< ","<< loadedConnections[i].inv2<<")";
 
-   }
+   }*/
 
     file.close();
 
@@ -231,11 +229,20 @@ void Map::init(){
 
 
 
-    for(int i=0; i<14; i++){
+    /*for(int i=0; i<14; i++){
             tab[i].setPos(loadedRoads[i].x,loadedRoads[i].y);
             tab[i].setRotation(loadedRoads[i].rotation);
             addItem(&tab[i]);
+    }*/
+
+    for(int i=0; i<14; i++){
+        Road* temp = new Road;
+        temp->setPos(loadedRoads[i].x,loadedRoads[i].y);
+        temp->setRotation(loadedRoads[i].rotation);
+        addItem(temp);
+        listOfRoads.append(temp);
     }
+
 
 
 
@@ -244,13 +251,13 @@ void Map::init(){
 
     for(int i=0; i<numberOfConnections; i++){
         if(loadedConnections[i].type1 == Element_type::tRoad && loadedConnections[i].type2 == Element_type::tRoad){
-            Road *road1 = &tab[loadedConnections[i].id1];
-            Road *road2 = &tab[loadedConnections[i].id2];
+            Road *road1 = listOfRoads[loadedConnections[i].id1];
+            Road *road2 = listOfRoads[loadedConnections[i].id2];
             connect(this, road1 ,road2 , loadedConnections[i].inv1, loadedConnections[i].inv2);
 
         }
         else if(loadedConnections[i].type1 == Element_type::tRoad && loadedConnections[i].type2 == Element_type::tCrossroad){
-            Road *road1 = &tab[loadedConnections[i].id1];
+            Road *road1 = listOfRoads[loadedConnections[i].id1];
 
             int _id2 = loadedConnections[i].id2;
             Entrance n = loadedConnections[i].entrance2;
@@ -263,7 +270,7 @@ void Map::init(){
             Entrance n = loadedConnections[i].entrance1;
             Road *road1 = tabCross[_id1].road[n];
 
-            Road *road2 = &tab[loadedConnections[i].id2];
+            Road *road2 = listOfRoads[loadedConnections[i].id2];
             connect(this, road1,road2 , loadedConnections[i].inv1, loadedConnections[i].inv2);
         }
         else if(loadedConnections[i].type1 == Element_type::tCrossroad && loadedConnections[i].type2 == Element_type::tCrossroad){

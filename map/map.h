@@ -36,8 +36,8 @@ class Map : public QGraphicsScene
 public:
     Map();
 
-    QList<coord> listOfElements;
-    QList<Road> listOfRoads;
+
+    QList<Road *> listOfRoads;
     QList<Crossroad> listOfCrossroads;
 
     void connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1=false, bool inv2=false);

@@ -23,13 +23,13 @@ int main(int argc, char **argv)
     scene.init();
 
 
-    Car car(scene.tab[0].mP);
-    car.setPos(scene.tab[0].pos());
+    Car car(scene.listOfRoads[0]->mP);
+    car.setPos(scene.listOfRoads[0]->pos());
     car.setSpeed(100);
     scene.addItem(&car);
 
-    Car car2(scene.tab[8].mP);
-    car2.setPos(scene.tab[8].pos());
+    Car car2(scene.listOfRoads[8]->mP);
+    car2.setPos(scene.listOfRoads[8]->pos());
     car2.setSpeed(100);
     scene.addItem(&car2);
 
