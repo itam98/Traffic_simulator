@@ -102,7 +102,7 @@ void MainWindow::documentWasModified()
 void MainWindow::createActions()
 {
 
-    //Menu
+    //---Menu
 
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));  //górny pasek
 
@@ -141,8 +141,11 @@ void MainWindow::createActions()
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->addAction(tr("&About"), this, &MainWindow::about);
 
-    //ToolBar
-    QToolBar *fileToolBar = addToolBar(tr("Add new"));
+
+
+    //-----ToolBar
+    QToolBar *fileToolBar = addToolBar(tr("Add new element"));
+
 
     //dolny pasek
     const QIcon addRoadIcon = QIcon(":/images/road_icon.png");
@@ -155,6 +158,11 @@ void MainWindow::createActions()
     //connect(addCrossroadAct, &QAction::triggered, this, &MainWindow::open);   //add new crossroad
     fileToolBar->addAction(addCrossroadAct);
 
+    QDockWidget *dock = new QDockWidget(tr("Settings"), this);
+    dock->setAllowedAreas(Qt::RightDockWidgetArea);
+
+    addDockWidget(Qt::RightDockWidgetArea, dock);
+    //viewMenu->addAction(dock->toggleViewAction());
 
 }
 
