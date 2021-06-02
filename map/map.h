@@ -11,6 +11,7 @@
 #include "map/milestone.h"
 #include "map/crossroad.h"
 #include "map/road.h"
+#include "map/background.h"
 
 enum Element_type {tMilestone=0, tRoad=1, tCrossroad=2};
 
@@ -36,6 +37,7 @@ class Map : public QGraphicsScene
 
 public:
     Map();
+
 
 
     QList<Road *> listOfRoads;

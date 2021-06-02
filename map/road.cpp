@@ -1,4 +1,5 @@
 #include "road.h"
+#include "map.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsObject>
@@ -75,5 +76,25 @@ void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 }
 
 
+QVariant Road::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if (change == ItemPositionChange && scene()) {
+        /*// value is the new position.
+        QPointF newPos = value.toPointF();
+        QRectF rect = scene()->sceneRect();
+        if (!rect.contains(newPos)) {
+            // Keep the item inside the scene rect.
+            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
+            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
+            return newPos;
+        }*/
 
+        qDebug()<<"hop";
+        Map *temp;
+        temp = (Map*)scene();
+        temp->plot();
+    }
+
+    return QGraphicsItem::itemChange(change, value);
+}
 

@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 
     //QGraphicsScene scene;
     Map scene;
+    qDebug()<<"Sdres scny:"<<&scene;
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
     scene.loadFromFile("../Traffic_simulator/saves/default.txt");
     scene.init();
@@ -31,11 +32,13 @@ int main(int argc, char **argv)
     car.setPos(scene.listOfRoads[0]->pos());
     car.setSpeed(100);
     scene.addItem(&car);
+    car.setZValue(10);
 
     Car car2(scene.listOfRoads[8]->mP);
     car2.setPos(scene.listOfRoads[8]->pos());
     car2.setSpeed(100);
     scene.addItem(&car2);
+    car2.setZValue(10);
 
     /*Car car3(tab[8].mP);
     car3.setPos(tab[8].pos());

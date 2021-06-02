@@ -26,14 +26,14 @@ void Map::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bo
     //TODO: dodać pozostałe przypadki
 
 
-    QPointF a = road1->scenePos();
-    QPointF b = road2->scenePos();
+    //QPointF a = road1->scenePos();
+    //QPointF b = road2->scenePos();
 
 
-    QPen pen(Qt::white, 3, Qt::DashLine, Qt::FlatCap, Qt::RoundJoin);
-    QPen pen2(Qt::black, 70, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    //QPen pen(Qt::white, 3, Qt::DashLine, Qt::FlatCap, Qt::RoundJoin);
+    //QPen pen2(Qt::black, 70, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-    pen.setDashOffset(10);
+    //pen.setDashOffset(10);
 
 
     //scene->addLine(a.x(), a.y(),b.x(),b.y(),pen2);
@@ -46,6 +46,10 @@ void Map::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bo
 
 void Map::plot(){
 
+    //Background bg;
+
+    //clear();
+    //viewport().update();
 
     QPen pen(Qt::white, 3, Qt::DashLine, Qt::FlatCap, Qt::RoundJoin);
     QPen pen2(Qt::black, 70, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -53,6 +57,11 @@ void Map::plot(){
     pen.setDashOffset(10);
 
     qDebug() << "----ZACZYNAM FUNKCJĘ PLOT------";
+    qDebug() << "plot: laodedConnections.size() ="<< loadedConnections.size();
+
+
+        QPen pen3(Qt::white, 500, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    addRect(0,0,1000,1000,pen3);
 
     for (int i = 0; i < loadedConnections.size(); ++i) {
         qDebug() << "id1: " << loadedConnections.at(i).id1 << " id2: " << loadedConnections.at(i).id2;
@@ -102,13 +111,66 @@ void Map::plot(){
 
 
 
-
-
         this->addLine(x1, y1, x2, y2,pen2);
-        this->addLine(x1, y1, x2, y2,pen);
+
+
+
     }
 
 
+    for (int i = 0; i < loadedConnections.size(); ++i) {
+        qDebug() << "id1: " << loadedConnections.at(i).id1 << " id2: " << loadedConnections.at(i).id2;
+
+
+        int id1 = loadedConnections.at(i).id1;  //sprawdza jakie id mają obiekty w danym połączeniu
+        int id2 = loadedConnections.at(i).id2;
+
+        int x1=0,y1=0,x2=0,y2=0;
+
+        if(loadedConnections.at(i).type1 == Element_type::tRoad){   //jeśli element jest droga to poprsotu go odczytaj
+
+            x1 = listOfRoads.at(id1)->x();
+            y1 = listOfRoads.at(id1)->y();
+            //qDebug() << "1. to road";
+
+        }
+        else if(loadedConnections.at(i).type1 == Element_type::tCrossroad){ //jeśli eleemnt jest skrzyżowaniem to spradź którą jego drogę łaczę
+
+            Entrance ent1 = loadedConnections.at(i).entrance1;
+            x1 = listOfCrossroads.at(id1)->getEntrance(ent1)->scenePos().x();
+            y1 = listOfCrossroads.at(id1)->getEntrance(ent1)->scenePos().y();
+            //qDebug() << "1. to crossroad, a entance to" << (Entrance)loadedConnections.at(i).entrance1;
+        }
+
+
+
+        if(loadedConnections.at(i).type2 == Element_type::tRoad){   //jeśli element jest droga to poprsotu go odczytaj
+
+            x2 = listOfRoads.at(id2)->x();
+            y2 = listOfRoads.at(id2)->y();
+            //qDebug() << "2. to road";
+
+        }
+        else if(loadedConnections.at(i).type2 == Element_type::tCrossroad){ //jeśli eleemnt jest skrzyżowaniem to spradź którą jego drogę łaczę
+
+            Entrance ent2 = loadedConnections.at(i).entrance2;
+            x2 = listOfCrossroads.at(id2)->getEntrance(ent2)->scenePos().x();
+            y2 = listOfCrossroads.at(id2)->getEntrance(ent2)->scenePos().y();
+            //qDebug() << "12. to crossroad, a entance to" << (Entrance)loadedConnections.at(i).entrance2;
+        }
+
+
+
+        //x2 = listOfRoads.at(id2)->x();
+        //y2 = listOfRoads.at(id2)->y();
+
+
+
+
+        this->addLine(x1, y1, x2, y2,pen);
+
+
+    }
 
     qDebug() << "----KOŃCZĘ FUNKCJĘ PLOT------";
 

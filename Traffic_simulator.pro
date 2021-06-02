@@ -13,6 +13,7 @@ SOURCES += \
     car/sensor.cpp \
     main.cpp \
     mainwindow.cpp \
+    map/background.cpp \
     map/map.cpp \
     map/crossroad.cpp \
     map/entrance.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     car/car.h \
     car/sensor.h \
     mainwindow.h \
+    map/background.h \
     map/map.h \
     map/crossroad.h \
     map/entrance.h \
