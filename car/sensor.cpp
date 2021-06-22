@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QPoint>
 
+
 Sensor::Sensor()
 {
 
@@ -42,4 +43,29 @@ void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 
 }
 
+int Sensor::checkSensor()
+{
+    int value = -1;
+    foreach (Car * item, myMap->listOfCars){
 
+        if ( collidesWithItem(item) ){
+            if(item != myCar){
+                value = item->getSpeed();
+                myCar->setSpeed(value-1);
+                qDebug() << "kolizja";
+            }
+
+        }
+        else myCar->setDefaultSpeed();
+    }
+
+
+    return value;
+}
+
+
+void Sensor::setMyCar(Car* car)
+{
+    myCar = car;
+
+}

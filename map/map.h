@@ -12,6 +12,9 @@
 #include "map/crossroad.h"
 #include "map/road.h"
 #include "map/background.h"
+#include "car/car.h"
+
+class Car;
 
 enum Element_type {tMilestone=0, tRoad=1, tCrossroad=2};
 
@@ -42,6 +45,7 @@ public:
 
     QList<Road *> listOfRoads;
     QList<Crossroad *> listOfCrossroads;
+    QList<Car *> listOfCars;
 
     void connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1=false, bool inv2=false);
 

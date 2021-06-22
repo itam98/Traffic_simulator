@@ -4,13 +4,17 @@
 #include <QGraphicsObject>
 #include "../map/milestone.h"
 #include "sensor.h"
+#include "map/map.h"
+
+class Sensor;
+class Map;
 
 class Car : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    Car(Milestone *nextMS);
+    Car(Milestone *nextMS, Map * map);
 
     qreal framerate = 60; //ilość kroków symulacji na sekundę
 
@@ -25,6 +29,9 @@ public:
     qreal getSpeed();
 
     Sensor *sensor1;
+    Map* myMap;
+
+    void setDefaultSpeed();
 
 protected:
     void timerEvent(QTimerEvent *event) override;
@@ -37,6 +44,8 @@ private:
     QColor color;
     Milestone *currentMilestone;
     int aproxDistanceToMS;
+
+    int step=0; //do debugowania sensora usun potem
 };
 
 #endif // CAR_H

@@ -8,17 +8,23 @@
 #include <complex>
 #include <QDebug>
 
-Car::Car(Milestone *nextMS) : color(QRandomGenerator::global()->bounded(256),
+Car::Car(Milestone *nextMS, Map* map) : color(QRandomGenerator::global()->bounded(256),
                    QRandomGenerator::global()->bounded(256),
                    QRandomGenerator::global()->bounded(256))
 {
+    myMap = map;
+
     startTimer(1000/framerate);
     currentMilestone=nextMS;
     faceToMilestone();
     defaultSpeed = 50+ QRandomGenerator::global()->bounded(100);
+    setSpeed(defaultSpeed);
 
     sensor1 = new Sensor;
     sensor1->setParentItem(this);
+    sensor1->setMyCar(this);
+    sensor1->myMap = this->myMap;
+
 }
 
 
@@ -53,45 +59,12 @@ void Car::timerEvent(QTimerEvent *)
 
     }
 
-
-    QList<QGraphicsItem*> collidingItems = scene()->collidingItems(this,Qt::IntersectsItemShape);
-
-    setSpeed(defaultSpeed);
-    foreach (QGraphicsItem * item, collidingItems){
-        Car * carItem = dynamic_cast<Car*>(item);
-        if(carItem){
-            setSpeed(carItem->getSpeed());
-        }
-
-
+    int value = sensor1->checkSensor();
+    if(value>=0){
+        qDebug() << step << ": " << value;
     }
+    step++;
 
-
-/*    const QList<QGraphicsItem *> dangerMice = scene()->items(QPolygonF()
-                           << mLpToScene(0, 0)
-                           << mLpToScene(-30, -50)
-                           << mLpToScene(30, -50));
-    setSpeed(150);
-
-    for (const QGraphicsItem *item : dangerMice)
-    {
-        if (item == this)
-            continue;
-        if( item->metaObject()->className() )setSpeed(30);
-    }
-*/
-    /*if(!scene()->collidingItems(this).isEmpty() ){
-        for (int i = 0; i < scene()->collidingItems(this).size(); ++i) {
-            if (scene()->collidingItems(this).at(i))
-                cout << "Found Jane at position " << i << Qt::endl;
-        }
-
-        //qDebug() << "collison";
-        setSpeed(100);
-    }
-    else setSpeed(30);
-*/
-       // qobject_cast<Car*>(instance);
 
 }
 
@@ -154,6 +127,7 @@ void Car::setSpeed(qreal value)
     speed = value;      //ustaw ograniczenie prędkości
     step_length = value/framerate;       //oblicz jaki to da krok na jeden krok symulacji
     aproxDistanceToMS = qCeil(step_length/1.9); //wyzancz mLrgines błędu osiągnicia celu z dokładnością do +- pół kroku
+    qDebug()<< "setSpeed:"<<value;
 }
 
 
@@ -161,4 +135,7 @@ qreal Car::getSpeed(){
     return speed;
 }
 
+void Car::setDefaultSpeed(){
+    setSpeed(defaultSpeed);
 
+}

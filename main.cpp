@@ -28,17 +28,23 @@ int main(int argc, char **argv)
     scene.init();
 
 
-    Car car(scene.listOfRoads[0]->mP);
+
+    Car car(scene.listOfRoads[0]->mP, &scene);
     car.setPos(scene.listOfRoads[0]->pos());
-    car.setSpeed(100);
+    //car.setSpeed(100);
     scene.addItem(&car);
     car.setZValue(10);
+    qDebug("dupa");
+    //car.myMap = &scene;
+    scene.listOfCars.append(&car);
 
-    Car car2(scene.listOfRoads[8]->mP);
+    Car car2(scene.listOfRoads[8]->mP, &scene);
     car2.setPos(scene.listOfRoads[8]->pos());
-    car2.setSpeed(100);
+    //car2.setSpeed(100);
     scene.addItem(&car2);
     car2.setZValue(10);
+    //car2.myMap = &scene;
+    scene.listOfCars.append(&car2);
 
     /*Car car3(tab[8].mP);
     car3.setPos(tab[8].pos());
