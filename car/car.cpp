@@ -24,6 +24,7 @@ Car::Car(Milestone *nextMS, Map* map) : color(QRandomGenerator::global()->bounde
     sensor1->setParentItem(this);
     sensor1->setMyCar(this);
     sensor1->myMap = this->myMap;
+    sensor1->setZValue(10);
 
 }
 
@@ -50,8 +51,15 @@ void Car::timerEvent(QTimerEvent *)
                 Crossroad *cross = currentMilestone->itemsCrossroad;
 
                 int random = QRandomGenerator::global()->bounded(3);
-                currentMilestone = cross->getNextMilestone(currentMilestone, (Direction)random);
-                faceToMilestone();
+                Milestone* milestoneFromCrossroad = NULL;
+                milestoneFromCrossroad = cross->getNextMilestone(currentMilestone, (Direction)random);
+                if(milestoneFromCrossroad != NULL){
+
+                    currentMilestone = milestoneFromCrossroad;
+                    faceToMilestone();
+
+                }
+
 
 
             }
@@ -81,7 +89,7 @@ QPainterPath Car::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
     //path.addRect(-10, -25, 20, 45);
-    path.addRect(-10, -35, 20, 100);
+    path.addRect(-10, 0, 20, 40);
     //path.addRect(-10, -35, 20, 10);
     return path;
 
@@ -91,16 +99,16 @@ void Car::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     //narysuj karoserię
     painter->setBrush(color);
-    painter->drawRoundedRect(-9, -20, 18, 40, 3, 3);
+    painter->drawRoundedRect(-9, 0, 18, 40, 3, 3);    //(-9, -20, 18, 40, 3, 3)
 
     //narysuj szubę
     painter->setBrush(QColor(220,220,255));
-    painter->drawRect(-8, -11, 16, 10);
+    painter->drawRect(-8, 9, 16, 10);
 
     //narysuj lampy
     painter->setBrush(Qt::yellow);
-    painter->drawEllipse(-9, -20, 8, 6);
-    painter->drawEllipse(1, -20, 8, 6);
+    painter->drawEllipse(-9, 0, 8, 6);
+    painter->drawEllipse(1, 0, 8, 6);
 
 }
 
@@ -127,7 +135,7 @@ void Car::setSpeed(qreal value)
     speed = value;      //ustaw ograniczenie prędkości
     step_length = value/framerate;       //oblicz jaki to da krok na jeden krok symulacji
     aproxDistanceToMS = qCeil(step_length/1.9); //wyzancz mLrgines błędu osiągnicia celu z dokładnością do +- pół kroku
-    qDebug()<< "setSpeed:"<<value;
+    //qDebug()<< "setSpeed:"<<value;
 }
 
 

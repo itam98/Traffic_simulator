@@ -2,7 +2,7 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QPoint>
-
+#include <qmath.h>
 
 Sensor::Sensor()
 {
@@ -22,7 +22,7 @@ QRectF Sensor::boundingRect() const    //metoda dziedziczona po wirtualnej metod
 QPainterPath Sensor::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
-    path.addRect(-30, -120, 60, 120);
+    path.addRect(-30, -100, 60, 120);
     return path;
 
 }
@@ -51,7 +51,7 @@ int Sensor::checkSensor()
         if ( collidesWithItem(item) ){
             if(item != myCar){
                 value = item->getSpeed();
-                myCar->setSpeed(value-1);
+                myCar->setSpeed( floor(value*0.98) ); //loor(value*0.98)
                 qDebug() << "kolizja";
             }
 

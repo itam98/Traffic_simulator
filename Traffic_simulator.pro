@@ -10,10 +10,13 @@ CONFIG += c++11
 
 SOURCES += \
     car/car.cpp \
+    car/motorcycle.cpp \
     car/sensor.cpp \
+    car/vehicle.cpp \
     main.cpp \
     mainwindow.cpp \
     map/background.cpp \
+    map/light.cpp \
     map/map.cpp \
     map/crossroad.cpp \
     map/entrance.cpp \
@@ -22,9 +25,12 @@ SOURCES += \
 
 HEADERS += \
     car/car.h \
+    car/motorcycle.h \
     car/sensor.h \
+    car/vehicle.h \
     mainwindow.h \
     map/background.h \
+    map/light.h \
     map/map.h \
     map/crossroad.h \
     map/entrance.h \
