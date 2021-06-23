@@ -263,7 +263,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
     QString shownName = curFile;
     if (curFile.isEmpty())
-        shownName = "untitled.txt";
+        shownName = "untitled2.txt";
     setWindowFilePath(shownName);
 }
 

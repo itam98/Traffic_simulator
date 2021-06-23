@@ -61,7 +61,7 @@ void Map::plot(){
 
 
         QPen pen3(Qt::white, 500, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    addRect(0,0,1000,1000,pen3);
+    addRect(0,0,1500,1500,pen3);
 
     for (int i = 0; i < loadedConnections.size(); ++i) {
         qDebug() << "id1: " << loadedConnections.at(i).id1 << " id2: " << loadedConnections.at(i).id2;

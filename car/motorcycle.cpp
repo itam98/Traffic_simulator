@@ -95,7 +95,7 @@ QPainterPath Motorcycle::shape() const     //kształt wykorzystywany w detekcji 
 {
     QPainterPath path;
     //path.addRect(-10, -25, 20, 45);
-    path.addRect(-10, 0, 20, 40);
+    path.addRect(-20, 0, 4, 30);
     //path.addRect(-10, -35, 20, 10);
     return path;
 

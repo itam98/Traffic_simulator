@@ -23,9 +23,9 @@ int main(int argc, char **argv)
 
     //QGraphicsScene scene;
     Map scene;
-    qDebug()<<"Sdres scny:"<<&scene;
+    qDebug()<<"adres scny:"<<&scene;
     scene.setItemIndexMethod(QGraphicsScene::NoIndex);
-    scene.loadFromFile("../Traffic_simulator/saves/default.txt");
+    scene.loadFromFile("../Traffic_simulator/saves/default2.txt");
     scene.init();
 
 
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
     view.setDragMode(QGraphicsView::ScrollHandDrag);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic Simulator"));
-    view.resize(900, 900);
+    view.resize(1500, 1500);
 
     MainWindow mainWin;
     mainWin.setCentralWidget(&view);
