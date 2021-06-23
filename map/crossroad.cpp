@@ -153,7 +153,7 @@ Road* Crossroad::getEntrance(Entrance entrance)
 
 Milestone* Crossroad::getNextMilestone(Milestone* currentMilestone, Direction dir)
 {
-    if( ((currentMilestone->itemsRoad == road[0] || currentMilestone->itemsRoad == road[2]) && stop_a == false)  ||  ((currentMilestone->itemsRoad == road[1] || currentMilestone->itemsRoad == road[3]) && stop_a == true) ){
+    if( ((currentMilestone->itemsRoad == road[0] || currentMilestone->itemsRoad == road[2]) && stop_a == false)  ||  ((currentMilestone->itemsRoad == road[1] || currentMilestone->itemsRoad == road[3]) && stop_b == false) ){
         int temp;
 
         for(int i=0; i<4; i++){

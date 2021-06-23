@@ -1,5 +1,6 @@
 
 #include "car/car.h"
+#include "car/motorcycle.h"
 
 #include "map/milestone.h"
 #include "map/crossroad.h"
@@ -45,6 +46,15 @@ int main(int argc, char **argv)
     car2.setZValue(10);
     //car2.myMap = &scene;
     scene.listOfCars.append(&car2);
+
+
+    qDebug() << "--- motorcycle ---";
+    Motorcycle motor(scene.listOfRoads[8]->mP, &scene);
+    motor.setPos(scene.listOfRoads[8]->pos());
+    scene.addItem(&motor);
+    motor.setZValue(10);
+    motor.faceToMilestone();
+
 
     /*Car car3(tab[8].mP);
     car3.setPos(tab[8].pos());

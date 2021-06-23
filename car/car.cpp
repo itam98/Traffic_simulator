@@ -33,7 +33,7 @@ Car::Car(Milestone *nextMS, Map* map) : color(QRandomGenerator::global()->bounde
 void Car::timerEvent(QTimerEvent *)
 {
     if(currentMilestone != NULL){
-        faceToMilestone();  //dodane w każdym kroku TODO:usunąć to
+        //faceToMilestone();  //dodane w każdym kroku TODO:usunąć to
 
         //sprawdza odległóść do obiektu
         QLineF lineToMilestone(scenePos(), currentMilestone->scenePos());
@@ -125,25 +125,5 @@ bool Car::faceToMilestone()     //skieruj samochód w kierunku następnego celu
 
 }
 
-void Car::setMilestone(Milestone *nextMS)
-{
-    currentMilestone = nextMS;
-}
-
-void Car::setSpeed(qreal value)
-{
-    speed = value;      //ustaw ograniczenie prędkości
-    step_length = value/framerate;       //oblicz jaki to da krok na jeden krok symulacji
-    aproxDistanceToMS = qCeil(step_length/1.9); //wyzancz mLrgines błędu osiągnicia celu z dokładnością do +- pół kroku
-    //qDebug()<< "setSpeed:"<<value;
-}
 
 
-qreal Car::getSpeed(){
-    return speed;
-}
-
-void Car::setDefaultSpeed(){
-    setSpeed(defaultSpeed);
-
-}

@@ -46,19 +46,35 @@ void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 int Sensor::checkSensor()
 {
     int value = -1;
-    foreach (Car * item, myMap->listOfCars){
+    qDebug() << "yay";
+    if (myCar == NULL){
+        foreach (Car * item, myMap->listOfCars){
 
-        if ( collidesWithItem(item) ){
-            if(item != myCar){
-                value = item->getSpeed();
-                myCar->setSpeed( floor(value*0.98) ); //loor(value*0.98)
-                qDebug() << "kolizja";
+            if ( collidesWithItem(item) ){
+
+                    value = item->getSpeed();
+                    myMotor->setSpeed( 0 ); //loor(value*0.98)
+                    qDebug() << "kolizja";
+
+
             }
-
+            else myMotor->setDefaultSpeed();
         }
-        else myCar->setDefaultSpeed();
     }
+    else{
+        foreach (Car * item, myMap->listOfCars){
 
+            if ( collidesWithItem(item) ){
+                if(item != myCar){
+                    value = item->getSpeed();
+                    myCar->setSpeed( 0 ); //loor(value*0.98)
+                    qDebug() << "kolizja";
+                }
+
+            }
+            else myCar->setDefaultSpeed();
+        }
+    }
 
     return value;
 }
@@ -69,3 +85,11 @@ void Sensor::setMyCar(Car* car)
     myCar = car;
 
 }
+
+void Sensor::setMyMotor(Motorcycle* motor)
+{
+    myMotor = motor;
+
+}
+
+

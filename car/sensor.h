@@ -3,10 +3,13 @@
 
 #include <QGraphicsObject>
 #include "car.h"
+#include "motorcycle.h"
 #include "map/map.h"
 
 class Car;
+class Motorcycle;
 class Map;
+
 
 class Sensor : public QGraphicsObject
 {
@@ -16,7 +19,8 @@ public:
     Sensor();
 
 
-
+    void setMyCar(Car* car);
+    void setMyMotor(Motorcycle* motor);
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
@@ -24,7 +28,7 @@ public:
 
     int checkSensor();  //zwraca prędkość wykrytego pojazd z przodu
 
-    void setMyCar(Car* car);
+
 
     Map * myMap;
 
@@ -34,7 +38,8 @@ public:
 
     private:
 
-        Car* myCar;
+        Car* myCar = NULL;
+        Motorcycle* myMotor = NULL;
 
 
 };
