@@ -14,7 +14,7 @@ Sensor::Sensor()
 QRectF Sensor::boundingRect() const    //metoda dziedziczona po wirtualnej metodzie w graphicsobject a dokładniej grpahicsItem
 {
     qreal adjust = 2;
-    return QRectF(-10 - adjust, -25 - adjust,20 + adjust, 45 + adjust);
+    return QRectF(-10 - adjust, -25 - adjust,20 + adjust, 145 + adjust);
 
 }
 
@@ -22,7 +22,7 @@ QRectF Sensor::boundingRect() const    //metoda dziedziczona po wirtualnej metod
 QPainterPath Sensor::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
-    path.addRect(-30, -100, 60, 120);
+    path.addRect(-30, -100, 60, 160);
     return path;
 
 }
@@ -46,7 +46,6 @@ void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 int Sensor::checkSensor()
 {
     int value = -1;
-    qDebug() << "yay";
     if (myCar == NULL){
         foreach (Car * item, myMap->listOfCars){
 

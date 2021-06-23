@@ -14,11 +14,10 @@ Motorcycle::Motorcycle(Milestone *nextMS, Map* map) : color(QRandomGenerator::gl
                                                             QRandomGenerator::global()->bounded(256))
 {
     myMap = map;
-    qDebug() << "--- 1 ---";
     startTimer(1000/framerate);
     currentMilestone=nextMS;
     faceToMilestone();
-    defaultSpeed = 50+ QRandomGenerator::global()->bounded(100);
+    defaultSpeed = 70+ QRandomGenerator::global()->bounded(10);
     setSpeed(defaultSpeed);
 
     sensor1 = new Sensor;
@@ -26,32 +25,27 @@ Motorcycle::Motorcycle(Milestone *nextMS, Map* map) : color(QRandomGenerator::gl
     sensor1->setMyMotor(this);
     sensor1->myMap = this->myMap;
     sensor1->setZValue(10);
-    qDebug() << "--- 2 ---";
+
 }
 
 
 void Motorcycle::timerEvent(QTimerEvent *)
 {
-    qDebug() << "--- 3 ---";
+
     if(currentMilestone != NULL){
-        qDebug() << "--- 5 ---";
+
         //sprawdza odległóść do obiektu
         QLineF lineToMilestone(scenePos(), currentMilestone->scenePos());
-        qDebug() << "--- 6 ---";
+
         if (lineToMilestone.length() > aproxDistanceToMS)           //sprawdź czy punkt został osiagnięty
         {
             setPos(mapToParent(0, -step_length));                   //jeśli nie to zrób krok
-            qDebug() << "--- 7 ---";
         }
         else                                                        //jeśli tak to pobierz nastpny punkt
         {
-            qDebug() << "--- 8 ---";
             if(currentMilestone->isCrossroad == false){
                 currentMilestone = currentMilestone->next;
-                qDebug() << "--- 9 ---";
                 faceToMilestone();
-                qDebug() << "--- 10 ---";
-
             }
             else{   //the car reached crossroad
                 Crossroad *cross = currentMilestone->itemsCrossroad;
@@ -63,30 +57,23 @@ void Motorcycle::timerEvent(QTimerEvent *)
 
                     currentMilestone = milestoneFromCrossroad;
                     faceToMilestone();
-
                 }
-
-
-
             }
         }
-
     }
-    qDebug() << "--- a ---";
+
     int value = sensor1->checkSensor();
     if(value>=0){
         qDebug() << step << ": " << value;
     }
     step++;
 
-    qDebug() << "--- 4 ---";
 }
 
 QRectF Motorcycle::boundingRect() const    //OBSZAR RYSOWANIA
 {
-    qreal adjust = 2;
-    //return QRectF(-10 - adjust, -25 - adjust,20 + adjust, 45 + adjust);
-    return QRectF(-60 - adjust, -120 - adjust,120 + adjust, 180 + adjust);
+
+    return QRectF(-62, -122 ,122, 182 );
 
 }
 
@@ -94,9 +81,7 @@ QRectF Motorcycle::boundingRect() const    //OBSZAR RYSOWANIA
 QPainterPath Motorcycle::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
-    //path.addRect(-10, -25, 20, 45);
-    path.addRect(-20, 0, 4, 30);
-    //path.addRect(-10, -35, 20, 10);
+    path.addRect(-8, 0, 16, 30);
     return path;
 
 }

@@ -84,52 +84,52 @@ Crossroad::Crossroad()
 // 4-pomaranczowe+czerwone
 
 void Crossroad::timerEvent(QTimerEvent *){
-    if(timer>38)timer=0;
+    if(timer>27)timer=0;
 
     if(timer>=0 && timer<10){
-        qDebug() << "ZIELONE  |  CZERWONE";
+        // "ZIELONE  |  CZERWONE";
         setLight(1,3);
         stop_a=false;
         stop_b=true;
     }
-    else if(timer>=10 && timer<13){
-        qDebug() << "POMARAŃCZOWE  |  CZERWONE";
+    else if(timer>=10 && timer<11){
+        // "POMARAŃCZOWE  |  CZERWONE";
         setLight(2,3);
         stop_a=true;
         stop_b=true;
     }
-    else if(timer>=13 && timer<14){
-        qDebug() << "CZERWONE  |  CZERWONE";
+    else if(timer>=11 && timer<12){
+        // "CZERWONE  |  CZERWONE";
         setLight(3,3);
         stop_a=true;
         stop_b=true;
     }
-    else if(timer>=16 && timer<19){
-        qDebug() << "CZERWONE  |  CZERWONE+POMARAŃCZOWE";
+    else if(timer>=12 && timer<13){
+        // "CZERWONE  |  CZERWONE+POMARAŃCZOWE";
         setLight(3,4);
         stop_a=true;
         stop_b=true;
     }
-    else if(timer>=19 && timer<29){
-        qDebug() << "CZERWONE  |  ZIELONE";
+    else if(timer>=13 && timer<23){
+        // "CZERWONE  |  ZIELONE";
         setLight(3,1);
         stop_a=true;
         stop_b=false;
     }
-    else if(timer>=29 && timer<32){
-        qDebug() << "CZERWONE  |  POMARAŃCZOWE";
+    else if(timer>=23 && timer<24){
+        // "CZERWONE  |  POMARAŃCZOWE";
         setLight(3,2);
         stop_a=true;
         stop_b=true;
     }
-    else if(timer>=32 && timer<35){
-        qDebug() << "CZERWONE  |  CZERWONE";
+    else if(timer>=25 && timer<26){
+        // "CZERWONE  |  CZERWONE";
         setLight(3,3);
         stop_a=true;
         stop_b=true;
     }
-    else if(timer>=35 && timer<38){
-        qDebug() << "POMARAŃCZOWE  |  CZERWONE";
+    else if(timer>=26 && timer<27){
+        // "POMARAŃCZOWE  |  CZERWONE";
         setLight(2,3);
         stop_a=true;
         stop_b=true;

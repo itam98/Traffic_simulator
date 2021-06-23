@@ -32,51 +32,44 @@ int main(int argc, char **argv)
 
     Car car(scene.listOfRoads[0]->mP, &scene);
     car.setPos(scene.listOfRoads[0]->pos());
-    //car.setSpeed(100);
     scene.addItem(&car);
     car.setZValue(10);
-    qDebug("dupa");
-    //car.myMap = &scene;
     scene.listOfCars.append(&car);
 
     Car car2(scene.listOfRoads[8]->mP, &scene);
     car2.setPos(scene.listOfRoads[8]->pos());
-    //car2.setSpeed(100);
     scene.addItem(&car2);
     car2.setZValue(10);
-    //car2.myMap = &scene;
     scene.listOfCars.append(&car2);
 
 
-    qDebug() << "--- motorcycle ---";
-    Motorcycle motor(scene.listOfRoads[8]->mP, &scene);
-    motor.setPos(scene.listOfRoads[8]->pos());
+    Car car3(scene.listOfRoads[14]->mP, &scene);
+    car3.setPos(scene.listOfRoads[15]->pos());
+    scene.addItem(&car3);
+    car3.setZValue(10);
+    scene.listOfCars.append(&car3);
+
+    Car car4(scene.listOfRoads[12]->mP, &scene);
+    car4.setPos(scene.listOfRoads[13]->pos());
+    scene.addItem(&car4);
+    car4.setZValue(10);
+    scene.listOfCars.append(&car4);
+
+
+    Motorcycle motor(scene.listOfRoads[7]->mP, &scene);
+    motor.setPos(scene.listOfRoads[7]->pos());
     scene.addItem(&motor);
     motor.setZValue(10);
     motor.faceToMilestone();
 
 
-    /*Car car3(tab[8].mP);
-    car3.setPos(tab[8].pos());
-    car3.setSpeed(100);
-    scene.addItem(&car3);
-
-    Car car4(tab[8].mL);
-    car4.setPos(tab[8].pos());
-    car4.setSpeed(110);
-    scene.addItem(&car4);
-
-    Car car5(tab[8].mL);
-    car5.setPos(tab[8].pos());
-    car5.setSpeed(90);
-    scene.addItem(&car5);*/
 
 
     car.faceToMilestone();
     car2.faceToMilestone();
-    /*car3.faceToMilestone();
+    car3.faceToMilestone();
     car4.faceToMilestone();
-    car5.faceToMilestone();*/
+
 
 
 
@@ -100,7 +93,7 @@ int main(int argc, char **argv)
     view.setDragMode(QGraphicsView::ScrollHandDrag);
 
     view.setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Traffic Simulator"));
-    view.resize(1500, 1500);
+    view.resize(2500, 1500);
 
     MainWindow mainWin;
     mainWin.setCentralWidget(&view);

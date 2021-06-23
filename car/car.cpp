@@ -17,7 +17,7 @@ Car::Car(Milestone *nextMS, Map* map) : color(QRandomGenerator::global()->bounde
     startTimer(1000/framerate);
     currentMilestone=nextMS;
     faceToMilestone();
-    defaultSpeed = 50+ QRandomGenerator::global()->bounded(100);
+    defaultSpeed = 30+ QRandomGenerator::global()->bounded(10);
     setSpeed(defaultSpeed);
 
     sensor1 = new Sensor;
@@ -89,7 +89,7 @@ QPainterPath Car::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
     //path.addRect(-10, -25, 20, 45);
-    path.addRect(-20, 0, 4, 30);
+    path.addRect(-8, 0, 16, 30);
     //path.addRect(-10, -35, 20, 10);
     return path;
 

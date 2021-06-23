@@ -15,7 +15,7 @@ Road::Road(bool isCrossroad){
     //L A   TODO: zmienić A i B na L i P
     //x>
     //P B
-
+    setVisible(false);
     if( !isCrossroad ) objNo = ++objCnt-1;
     else objNo = -1;
 
@@ -94,7 +94,7 @@ QVariant Road::itemChange(GraphicsItemChange change, const QVariant &value)
         temp = (Map*)scene();
         temp->plot();
     }
-
+    qDebug() << "new location"<< pos().x()<<" "<<pos().y();
     return QGraphicsItem::itemChange(change, value);
 }
 
