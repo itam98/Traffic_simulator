@@ -40,7 +40,7 @@ public:
 
         Car* myCar = NULL;
         Motorcycle* myMotor = NULL;
-
+        int cnt=0;
 
 };
 

@@ -25,7 +25,7 @@ public:
     QPainterPath shape() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget) override;
 
-
+    void collision() override;
 
     Sensor *sensor1;
     Map* myMap;
@@ -37,6 +37,7 @@ protected:
 private:
     QColor color;
     int step=0; //do debugowania sensora usun potem
+    bool flag_collision = true;
 
 
 

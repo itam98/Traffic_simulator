@@ -23,7 +23,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget) override;
 
     bool faceToMilestone();
-
+    void collision() override;
     Sensor *sensor1;
     Map* myMap;
 

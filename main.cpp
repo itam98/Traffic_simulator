@@ -43,21 +43,21 @@ int main(int argc, char **argv)
     scene.listOfCars.append(&car2);
 
 
-    Car car3(scene.listOfRoads[14]->mP, &scene);
+    Car car3(scene.listOfRoads[15]->mL, &scene);
     car3.setPos(scene.listOfRoads[15]->pos());
     scene.addItem(&car3);
     car3.setZValue(10);
     scene.listOfCars.append(&car3);
 
-    Car car4(scene.listOfRoads[12]->mP, &scene);
+    Car car4(scene.listOfRoads[13]->mP, &scene);
     car4.setPos(scene.listOfRoads[13]->pos());
     scene.addItem(&car4);
     car4.setZValue(10);
     scene.listOfCars.append(&car4);
 
 
-    Motorcycle motor(scene.listOfRoads[7]->mP, &scene);
-    motor.setPos(scene.listOfRoads[7]->pos());
+    Motorcycle motor(scene.listOfRoads[16]->mL, &scene);
+    motor.setPos(scene.listOfRoads[16]->pos());
     scene.addItem(&motor);
     motor.setZValue(10);
     motor.faceToMilestone();
@@ -73,10 +73,10 @@ int main(int argc, char **argv)
 
 
 
-    QMenuBar *menu = new QMenuBar;
-    QMenu *file = new QMenu();
-    file->addMenu("&File");
-    menu->addMenu(file);
+    //QMenuBar *menu = new QMenuBar;
+    //QMenu *file = new QMenu();
+    //file->addMenu("&File");
+    //menu->addMenu(file);
 
 
     QGraphicsView view(&scene);

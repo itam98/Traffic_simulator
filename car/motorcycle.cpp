@@ -43,6 +43,8 @@ void Motorcycle::timerEvent(QTimerEvent *)
         }
         else                                                        //jeśli tak to pobierz nastpny punkt
         {
+            defaultSpeed =80;
+            flag_collision = true;
             if(currentMilestone->isCrossroad == false){
                 currentMilestone = currentMilestone->next;
                 faceToMilestone();
@@ -81,7 +83,7 @@ QRectF Motorcycle::boundingRect() const    //OBSZAR RYSOWANIA
 QPainterPath Motorcycle::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
-    path.addRect(-8, 0, 16, 30);
+    path.addRect(-10, 0, 20, 40);
     return path;
 
 }
@@ -120,5 +122,25 @@ bool Motorcycle::faceToMilestone()     //skieruj samochód w kierunku następneg
         return true;
     }
     else return false;
+
+}
+
+
+void Motorcycle::collision(){
+
+    QLineF lineToMilestone(scenePos(), currentMilestone->scenePos());
+
+    if (lineToMilestone.length() > 200){
+
+        if(flag_collision){
+            setPos(mapToParent(-40, 0));
+            faceToMilestone();
+            defaultSpeed =200;
+            flag_collision = false;
+        }
+
+    }
+    else setSpeed(0);
+
 
 }

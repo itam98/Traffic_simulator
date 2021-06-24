@@ -16,7 +16,7 @@ public:
     void setSpeed(qreal value);
     qreal getSpeed();
     void setDefaultSpeed();
-
+    virtual void collision(){};
 
 protected:
     qreal defaultSpeed;
