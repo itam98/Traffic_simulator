@@ -39,6 +39,9 @@ Road::~Road()
     if( !isCrossroad )--objCnt;
 }
 
+/**********************************************
+ *  Obszar rysowania obiektu
+ */
 QRectF Road::boundingRect() const
 {
     qreal adjust = 0.5;
@@ -47,13 +50,10 @@ QRectF Road::boundingRect() const
 }
 
 
-/*QPainterPath Road::shape() const
-{
-    QPainterPath path;
-    path.addRect(-2, -30, 11, 60);
-    return path;
-}*/
 
+/**********************************************
+ *  Funkcja rysująca obiekt
+ */
 void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
 
@@ -62,9 +62,6 @@ void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     painter->drawLine(0, -w/2, 0, w/2);
     painter->drawLine(-2, -w/2, 2, -w/2);
     painter->drawLine(-2, w/2, 2, w/2);
-
-    painter->setBrush(Qt::green);
-    //painter->drawEllipse(-2, -2, 4, 4);
 
     painter->setBrush(Qt::black);
     painter->drawLine(0, -4, 9, 0);
@@ -79,22 +76,11 @@ void Road::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 QVariant Road::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if (change == ItemPositionChange && scene()) {
-        /*// value is the new position.
-        QPointF newPos = value.toPointF();
-        QRectF rect = scene()->sceneRect();
-        if (!rect.contains(newPos)) {
-            // Keep the item inside the scene rect.
-            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
-            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
-            return newPos;
-        }*/
-
-        qDebug()<<"hop";
         Map *temp;
         temp = (Map*)scene();
         temp->plot();
     }
-    qDebug() << "new location"<< pos().x()<<" "<<pos().y();
+
     return QGraphicsItem::itemChange(change, value);
 }
 

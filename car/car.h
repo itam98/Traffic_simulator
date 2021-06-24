@@ -17,6 +17,7 @@ class Car : public QGraphicsObject , public Vehicle
 
 public:
     Car(Milestone *nextMS, Map * map);
+    ~Car();
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;

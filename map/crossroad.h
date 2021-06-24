@@ -42,9 +42,6 @@ public:
 
 protected:
     const int width = 100; //wielkość skrzyżowania zmienne pomconicza, później nie powinnos się jej zmieniać
-
-    virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
-
     void timerEvent(QTimerEvent *event) override;
 
 private:

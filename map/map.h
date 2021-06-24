@@ -11,7 +11,6 @@
 #include "map/milestone.h"
 #include "map/crossroad.h"
 #include "map/road.h"
-#include "map/background.h"
 #include "car/car.h"
 
 class Car;
@@ -40,7 +39,7 @@ class Map : public QGraphicsScene
 
 public:
     Map();
-
+    ~Map();
 
 
     QList<Road *> listOfRoads;

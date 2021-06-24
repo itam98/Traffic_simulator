@@ -7,7 +7,9 @@ Light::Light(QColor c)
     color = c;
 }
 
-
+/**********************************************
+ *  Obszar rysowania obiektu
+ */
 QRectF Light::boundingRect() const
 {
     qreal adjust = 0.5;
@@ -17,7 +19,9 @@ QRectF Light::boundingRect() const
 
 
 
-
+/**********************************************
+ *  Funkcja rysująca obiekt
+ */
 void Light::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
 

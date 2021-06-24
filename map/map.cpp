@@ -5,7 +5,9 @@ Map::Map()
 
 }
 
-
+/**********************************************
+ *  Funkcja łącząca odcinki drogi
+ */
 void Map::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bool inv2)
 {
     if(inv1==false && inv2==false){
@@ -16,56 +18,31 @@ void Map::connect(QGraphicsScene *scene, Road *road1, Road *road2, bool inv1, bo
         road1->mL->prev = road2->mL;
     }
 
-    if(inv1==false && inv2==true){
+    else if(inv1==false && inv2==true){
         road1->mP->next = road2->mL;
         road2->mL->prev = road1->mP;
 
         road2->mP->next = road1->mL;
         road1->mL->prev = road2->mP;
     }
-    //TODO: dodać pozostałe przypadki
-
-
-    //QPointF a = road1->scenePos();
-    //QPointF b = road2->scenePos();
-
-
-    //QPen pen(Qt::white, 3, Qt::DashLine, Qt::FlatCap, Qt::RoundJoin);
-    //QPen pen2(Qt::black, 70, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-
-    //pen.setDashOffset(10);
-
-
-    //scene->addLine(a.x(), a.y(),b.x(),b.y(),pen2);
-    //scene->addLine(a.x(), a.y(),b.x(),b.y(),pen);
-
 
     return;
 }
 
-
+/**********************************************
+ *  Funkcja rysująca odcinki drogi
+ */
 void Map::plot(){
-
-    //Background bg;
-
-    //clear();
-    //viewport().update();
 
     QPen pen(Qt::white, 3, Qt::DashLine, Qt::FlatCap, Qt::RoundJoin);
     QPen pen2(Qt::black, 70, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     pen.setDashOffset(10);
 
-    qDebug() << "----ZACZYNAM FUNKCJĘ PLOT------";
-    qDebug() << "plot: laodedConnections.size() ="<< loadedConnections.size();
-
-
         QPen pen3(Qt::white, 500, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     addRect(0,0,1500,1500,pen3);
 
     for (int i = 0; i < loadedConnections.size(); ++i) {
-        qDebug() << "id1: " << loadedConnections.at(i).id1 << " id2: " << loadedConnections.at(i).id2;
-
 
         int id1 = loadedConnections.at(i).id1;  //sprawdza jakie id mają obiekty w danym połączeniu
         int id2 = loadedConnections.at(i).id2;
@@ -76,38 +53,26 @@ void Map::plot(){
 
             x1 = listOfRoads.at(id1)->x();
             y1 = listOfRoads.at(id1)->y();
-            qDebug() << "1. to road";
-
         }
         else if(loadedConnections.at(i).type1 == Element_type::tCrossroad){ //jeśli eleemnt jest skrzyżowaniem to spradź którą jego drogę łaczę
 
             Entrance ent1 = loadedConnections.at(i).entrance1;
             x1 = listOfCrossroads.at(id1)->getEntrance(ent1)->scenePos().x();
             y1 = listOfCrossroads.at(id1)->getEntrance(ent1)->scenePos().y();
-            qDebug() << "1. to crossroad, a entance to" << (Entrance)loadedConnections.at(i).entrance1;
         }
-
 
 
         if(loadedConnections.at(i).type2 == Element_type::tRoad){   //jeśli element jest droga to poprsotu go odczytaj
 
             x2 = listOfRoads.at(id2)->x();
             y2 = listOfRoads.at(id2)->y();
-            qDebug() << "2. to road";
-
         }
         else if(loadedConnections.at(i).type2 == Element_type::tCrossroad){ //jeśli eleemnt jest skrzyżowaniem to spradź którą jego drogę łaczę
 
             Entrance ent2 = loadedConnections.at(i).entrance2;
             x2 = listOfCrossroads.at(id2)->getEntrance(ent2)->scenePos().x();
             y2 = listOfCrossroads.at(id2)->getEntrance(ent2)->scenePos().y();
-            qDebug() << "12. to crossroad, a entance to" << (Entrance)loadedConnections.at(i).entrance2;
         }
-
-
-
-        //x2 = listOfRoads.at(id2)->x();
-        //y2 = listOfRoads.at(id2)->y();
 
 
 
@@ -119,8 +84,6 @@ void Map::plot(){
 
 
     for (int i = 0; i < loadedConnections.size(); ++i) {
-        qDebug() << "id1: " << loadedConnections.at(i).id1 << " id2: " << loadedConnections.at(i).id2;
-
 
         int id1 = loadedConnections.at(i).id1;  //sprawdza jakie id mają obiekty w danym połączeniu
         int id2 = loadedConnections.at(i).id2;
@@ -131,15 +94,12 @@ void Map::plot(){
 
             x1 = listOfRoads.at(id1)->x();
             y1 = listOfRoads.at(id1)->y();
-            //qDebug() << "1. to road";
-
         }
         else if(loadedConnections.at(i).type1 == Element_type::tCrossroad){ //jeśli eleemnt jest skrzyżowaniem to spradź którą jego drogę łaczę
 
             Entrance ent1 = loadedConnections.at(i).entrance1;
             x1 = listOfCrossroads.at(id1)->getEntrance(ent1)->scenePos().x();
             y1 = listOfCrossroads.at(id1)->getEntrance(ent1)->scenePos().y();
-            //qDebug() << "1. to crossroad, a entance to" << (Entrance)loadedConnections.at(i).entrance1;
         }
 
 
@@ -148,35 +108,24 @@ void Map::plot(){
 
             x2 = listOfRoads.at(id2)->x();
             y2 = listOfRoads.at(id2)->y();
-            //qDebug() << "2. to road";
-
         }
         else if(loadedConnections.at(i).type2 == Element_type::tCrossroad){ //jeśli eleemnt jest skrzyżowaniem to spradź którą jego drogę łaczę
 
             Entrance ent2 = loadedConnections.at(i).entrance2;
             x2 = listOfCrossroads.at(id2)->getEntrance(ent2)->scenePos().x();
             y2 = listOfCrossroads.at(id2)->getEntrance(ent2)->scenePos().y();
-            //qDebug() << "12. to crossroad, a entance to" << (Entrance)loadedConnections.at(i).entrance2;
         }
-
-
-
-        //x2 = listOfRoads.at(id2)->x();
-        //y2 = listOfRoads.at(id2)->y();
-
-
-
 
         this->addLine(x1, y1, x2, y2,pen);
 
-
     }
-
-    qDebug() << "----KOŃCZĘ FUNKCJĘ PLOT------";
-
 
 }
 
+
+/**********************************************
+ *  Wczytywanie mapy z pliku
+ */
 void Map::loadFromFile(QString name){
 
     QFile file(name);
@@ -266,8 +215,6 @@ void Map::loadFromFile(QString name){
 
 
 
-
-
         //------------ Load connections ------------
         if(flag_conn){
             if(line.indexOf("#") != -1){
@@ -311,41 +258,11 @@ void Map::loadFromFile(QString name){
 
 
         if( line.indexOf("$CONNECTIONS;") != -1){   //set flag if found CONNECTIONS data block
-            //connections_index = line_index;
             flag_conn=true;
         }
-        //----------------------------------
-
-
-
-
 
         line_index++;
     }
-        //qDebug()<<"roads_index:"<<roads_index<<"crossroads_index:"<<crossroads_index<<"connections_index:"<<connections_index;
-        //qDebug()<<"roads_cnt:"<<roads_cnt<<"crossroads_cnt:"<<crossroads_cnt<<"connections_cnt:"<<connections_cnt;
-
-
-
-
-/*
-    qDebug()<<"ROADS";
-    for(int i=0; i<roads_cnt;i++){
-        qDebug()<< "("<< loadedRoads[i].x<< ","<< loadedRoads[i].y<< ","<< loadedRoads[i].rotation<<")";
-
-    }
-
-    qDebug()<<"CROSSROADS";
-        for(int i=0; i<crossroads_cnt;i++){
-            qDebug()<< "("<< loadedCrossroads[i].x<< ","<< loadedCrossroads[i].y<< ","<< loadedCrossroads[i].rotation<<")";
-
-        }
-
-    qDebug()<<"CONNECTIONS";
-        for(int i=0; i<connections_cnt;i++){
-        qDebug()<< "("<< loadedConnections[i].type1<< ","<< loadedConnections[i].type2<< ","<< loadedConnections[i].id1<< ","<< loadedConnections[i].id2<< ","<< loadedConnections[i].entrance1<< ","<< loadedConnections[i].entrance2<< ","<< loadedConnections[i].inv1<< ","<< loadedConnections[i].inv2<<")";
-
-   }*/
 
     file.close();
 
@@ -356,7 +273,9 @@ void Map::loadFromFile(QString name){
 
 
 
-
+/**********************************************
+ *  Inicjalizacja mapy, rozstawienie dróg i skrzyżowań zaczytanych z pliku
+ */
 void Map::init(){
 
     setSceneRect(loadedSceneRect[0], loadedSceneRect[1], loadedSceneRect[2], loadedSceneRect[3]);
@@ -420,6 +339,44 @@ void Map::init(){
     plot();
 
 }
+
+
+
+Map::~Map(){
+
+    qDeleteAll(listOfRoads.begin(), listOfRoads.end());
+    listOfRoads.clear();
+
+    qDeleteAll(listOfCrossroads.begin(), listOfCrossroads.end());
+    listOfCrossroads.clear();
+
+    qDeleteAll(listOfCars.begin(), listOfCars.end());
+    listOfCars.clear();
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

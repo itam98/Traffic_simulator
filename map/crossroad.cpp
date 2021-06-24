@@ -19,6 +19,7 @@ Crossroad::Crossroad()
     //   S
 
     state=0;
+    timer=15;
     startTimer(1000);
 
     int coord[4][3]={           //x,y, rotation
@@ -74,7 +75,7 @@ Crossroad::Crossroad()
     }
 
 
-    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
+    setFlags(QGraphicsItem::ItemIsMovable);
 
 }
 
@@ -83,6 +84,9 @@ Crossroad::Crossroad()
 // 3-czerwone
 // 4-pomaranczowe+czerwone
 
+/**********************************************
+ *  Funkcja wykonywana cyklicznie w ściśle określonych odstepach czasu, wykonująca "logikę" świateł na skrzyżowaniu
+ */
 void Crossroad::timerEvent(QTimerEvent *){
     if(timer>27)timer=0;
 
@@ -141,7 +145,10 @@ void Crossroad::timerEvent(QTimerEvent *){
     timer++;
 }
 
-
+/**********************************************
+ *  Zwraca wskaźnik do wjzdu dla podanego parametru
+ *  @param entrance nazwa enum danego wjazdu
+ */
 Road* Crossroad::getEntrance(Entrance entrance)
 {
     if(entrance==Entrance::North) return road[Entrance::North];
@@ -151,6 +158,11 @@ Road* Crossroad::getEntrance(Entrance entrance)
     else return NULL;
 }
 
+/**********************************************
+ *  Zwraca następny cel dla pojazdów
+ *  @param currentMilestone wskaźnik do wjazdu na którym znajduje się auto
+ *  @param dir kierunek w którym chce skręcić
+ */
 Milestone* Crossroad::getNextMilestone(Milestone* currentMilestone, Direction dir)
 {
     if( ((currentMilestone->itemsRoad == road[0] || currentMilestone->itemsRoad == road[2]) && stop_a == false)  ||  ((currentMilestone->itemsRoad == road[1] || currentMilestone->itemsRoad == road[3]) && stop_b == false) ){
@@ -181,42 +193,39 @@ Milestone* Crossroad::getNextMilestone(Milestone* currentMilestone, Direction di
 
 
 
-
-QRectF Crossroad::boundingRect() const    //obszar rysowania
+/**********************************************
+ *  Obszar rysowania obiektu
+ */
+QRectF Crossroad::boundingRect() const
 {
     qreal adjust = 0.5;
     return QRectF(-width*2 - adjust, -width*2 - adjust,
                   4*width + adjust, 4*width + adjust);
 }
 
-
-QPainterPath Crossroad::shape() const     //kształt wykorzystywany w detekcji kolizji
+/**********************************************
+ *  Kształt obiektu służący do wykrywania kolizji
+ */
+QPainterPath Crossroad::shape() const
 {
     QPainterPath path;
     path.addRect(-width/2, -width/2, width, width);
     return path;
 }
-
+/**********************************************
+ *  Funkcja rysująca obiekt
+ */
 void Crossroad::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setPen(Qt::NoPen);
     painter->setBrush(QColor(0, 0, 0));
     painter->drawRect(-width/2, -width/2, width, width);
-
-
 }
 
 
-QVariant Crossroad::itemChange(GraphicsItemChange change, const QVariant &value){
-    qDebug() << "New pos:"<<pos();
-    if (change == ItemPositionChange) {
-        qDebug() << "New pos:"<<pos();
-        //TODO: dodać wyświetlaniei położenia na dolnym pasku
-    }
-    return QGraphicsItem::itemChange(change, value);
-
-}
-
+/**********************************************
+ *  Zapala i gasi swiatla drogowe
+ */
 void Crossroad::setLight(int a, int b){
     // 1-zielone
     // 2-pomaranczowe
@@ -320,9 +329,6 @@ void Crossroad::setLight(int a, int b){
         green[3]->color = g_off;
         break;
     }
-
-
-
 }
 
 

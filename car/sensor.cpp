@@ -10,7 +10,9 @@ Sensor::Sensor()
 }
 
 
-
+/**********************************************
+ *  Obszar rysowania obiektu
+ */
 QRectF Sensor::boundingRect() const    //metoda dziedziczona po wirtualnej metodzie w graphicsobject a dokładniej grpahicsItem
 {
     qreal adjust = 2;
@@ -18,16 +20,20 @@ QRectF Sensor::boundingRect() const    //metoda dziedziczona po wirtualnej metod
 
 }
 
-
+/**********************************************
+ *  Kształt obiektu służący do wykrywania kolizji
+ */
 QPainterPath Sensor::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
-    //path.addRect(-30, -100, 60, 160);
     path.addRect(-30, -100, 60, 120);
     return path;
 
 }
 
+/**********************************************
+ *  Funkcja rysująca obiekt
+ */
 void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
 
@@ -44,6 +50,9 @@ void Sensor::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 
 }
 
+/**********************************************
+ *  Odczytuje stan sensora, sprawdza czy nie wykryto auta
+ */
 int Sensor::checkSensor()
 {
     int value = -1;
@@ -88,13 +97,18 @@ int Sensor::checkSensor()
     return value;
 }
 
-
+/**********************************************
+ *  Ustawia wzkaźnik do samochodu na którym jest "zamontowany"
+ */
 void Sensor::setMyCar(Car* car)
 {
     myCar = car;
 
 }
 
+/**********************************************
+ *  Ustawia wzkaźnik do motocyklu na którym jest "zamontowany"
+ */
 void Sensor::setMyMotor(Motorcycle* motor)
 {
     myMotor = motor;

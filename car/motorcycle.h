@@ -18,7 +18,7 @@ class Motorcycle : public QGraphicsObject , public Vehicle
 
 public:
     Motorcycle(Milestone *nextMS, Map * map);
-
+    ~Motorcycle();
     bool faceToMilestone();
 
     QRectF boundingRect() const override;
@@ -30,7 +30,6 @@ public:
     Sensor *sensor1;
     Map* myMap;
 
-    virtual ~Motorcycle(){};
 protected:
     void timerEvent(QTimerEvent *event) override;
 

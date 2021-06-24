@@ -28,7 +28,9 @@ Motorcycle::Motorcycle(Milestone *nextMS, Map* map) : color(QRandomGenerator::gl
 
 }
 
-
+/**********************************************
+ *  Funkcja wykonywana cyklicznie w ściśle określonych odstepach czasu, wykonująca "logikę" jazdy motocyklu
+ */
 void Motorcycle::timerEvent(QTimerEvent *)
 {
 
@@ -72,14 +74,17 @@ void Motorcycle::timerEvent(QTimerEvent *)
 
 }
 
+/**********************************************
+ *  Obszar rysowania obiektu
+ */
 QRectF Motorcycle::boundingRect() const    //OBSZAR RYSOWANIA
 {
-
     return QRectF(-62, -122 ,122, 182 );
-
 }
 
-
+/**********************************************
+ *  Kształt obiektu służący do wykrywania kolizji
+ */
 QPainterPath Motorcycle::shape() const     //kształt wykorzystywany w detekcji kolizji
 {
     QPainterPath path;
@@ -88,6 +93,9 @@ QPainterPath Motorcycle::shape() const     //kształt wykorzystywany w detekcji 
 
 }
 
+/**********************************************
+ *  Funkcja rysująca obiekt
+ */
 void Motorcycle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setBrush(QColor(100,100,100));
@@ -112,7 +120,10 @@ void Motorcycle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
 
 }
 
-bool Motorcycle::faceToMilestone()     //skieruj samochód w kierunku następnego celu
+/**********************************************
+ *  Obracanie się w kierunku następnego celu (milestone)
+ */
+bool Motorcycle::faceToMilestone()
 {
     if(currentMilestone != NULL){
         //tworzy liczbę zepoloną
@@ -125,7 +136,9 @@ bool Motorcycle::faceToMilestone()     //skieruj samochód w kierunku następneg
 
 }
 
-
+/**********************************************
+ *  W razie wykrycia pozjazdu wyprzedza jeśli ma miejsce lub się zatrzymuje
+ */
 void Motorcycle::collision(){
 
     QLineF lineToMilestone(scenePos(), currentMilestone->scenePos());
@@ -141,6 +154,10 @@ void Motorcycle::collision(){
 
     }
     else setSpeed(0);
+}
 
+Motorcycle::~Motorcycle(){
+    delete sensor1;
+    delete myMap;
 
 }

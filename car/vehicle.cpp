@@ -5,12 +5,16 @@ Vehicle::Vehicle()
 
 }
 
-
+/**********************************************
+ *  Pobiera prędkość pojazdu
+ */
 qreal Vehicle::getSpeed(){
     return speed;
 }
 
-
+/**********************************************
+ *  Ustawia prędkość pojazdu
+ */
 void Vehicle::setSpeed(qreal value)
 {
     speed = value;      //ustaw ograniczenie prędkości
@@ -19,11 +23,17 @@ void Vehicle::setSpeed(qreal value)
     qDebug()<< "setSpeed:"<<value;
 }
 
+/**********************************************
+ *  Przywraca prędkość do domoślnej
+ */
 void Vehicle::setDefaultSpeed(){
     setSpeed(defaultSpeed);
 
 }
 
+/**********************************************
+ *  Ustawia następny punkt
+ */
 void Vehicle::setMilestone(Milestone *nextMS)
 {
     currentMilestone = nextMS;

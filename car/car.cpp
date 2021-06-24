@@ -29,7 +29,9 @@ Car::Car(Milestone *nextMS, Map* map) : color(QRandomGenerator::global()->bounde
 }
 
 
-
+/**********************************************
+ *  Funkcja wykonywana cyklicznie w ściśle określonych odstepach czasu, wykonująca "logikę" jazdy samochodu
+ */
 void Car::timerEvent(QTimerEvent *)
 {
     if(currentMilestone != NULL){
@@ -76,16 +78,18 @@ void Car::timerEvent(QTimerEvent *)
 
 }
 
-QRectF Car::boundingRect() const    //OBSZAR RYSOWANIA
+/**********************************************
+ *  Obszar rysowania obiektu
+ */
+QRectF Car::boundingRect() const
 {
-    qreal adjust = 2;
-    //return QRectF(-10 - adjust, -25 - adjust,20 + adjust, 45 + adjust);
-    return QRectF(-60 - adjust, -120 - adjust,120 + adjust, 180 + adjust);
-
+    return QRectF(-62, -122,122, 182);
 }
 
-
-QPainterPath Car::shape() const     //kształt wykorzystywany w detekcji kolizji
+/**********************************************
+ *  Kształt obiektu służący do wykrywania kolizji
+ */
+QPainterPath Car::shape() const
 {
     QPainterPath path;
     //path.addRect(-10, -25, 20, 45);
@@ -95,6 +99,9 @@ QPainterPath Car::shape() const     //kształt wykorzystywany w detekcji kolizji
 
 }
 
+/**********************************************
+ *  Funkcja rysująca obiekt
+ */
 void Car::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     //narysuj karoserię
@@ -112,6 +119,9 @@ void Car::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 
 }
 
+/**********************************************
+ *  Obracanie się w kierunku następnego celu (milestone)
+ */
 bool Car::faceToMilestone()     //skieruj samochód w kierunku następnego celu
 {
     if(currentMilestone != NULL){
@@ -125,8 +135,27 @@ bool Car::faceToMilestone()     //skieruj samochód w kierunku następnego celu
 
 }
 
+/**********************************************
+ *  W razie wykrycia pozjazdu zatrzymaj się
+ */
 void Car::collision(){
 
     setSpeed( 0 );
 }
+
+Car::~Car()
+{
+    delete sensor1;
+    delete myMap;
+
+
+}
+
+
+
+
+
+
+
+
 

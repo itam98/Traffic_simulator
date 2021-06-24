@@ -11,7 +11,9 @@ Milestone::Milestone()
 
 }
 
-
+/**********************************************
+ *  Obszar rysowania obiektu
+ */
 QRectF Milestone::boundingRect() const
 {
     qreal adjust = 0.5;
@@ -20,27 +22,26 @@ QRectF Milestone::boundingRect() const
 }
 
 
-/*QPainterPath Milestone::shape() const
-{
-    QPainterPath path;
-    path.addRect(-5, -5, 10, 10);
-    return path;
-}*/
-
+/**********************************************
+ *  Funkcja rysująca obiekt
+ */
 void Milestone::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setBrush(Qt::yellow);      //narysuj kropkę w celu debugowania
     painter->drawEllipse(-3, -3, 6, 6); //TODO:wyłączyć to w ostecznej wersji programu
 }
 
-
+/**********************************************
+ *  Ustawia limit prędkości na danym odcinku drogi
+ */
 void Milestone::setSpeedLimit(qreal value)
 {
-    //TODO: weyfikacja podanej wartości
     speedLimit = value;
 }
 
-
+/**********************************************
+ *  Zwraca limit prędkości na danym odcinku drogi
+ */
 qreal Milestone::getSpeedLimit(){
     return speedLimit;
 }
